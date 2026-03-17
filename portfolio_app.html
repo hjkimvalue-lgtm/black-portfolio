@@ -638,6 +638,7 @@ const PORTFOLIO_DATA = {
 
     /* Hide desktop table, show mobile cards */
     .table-container { display: none; }
+    .ranking-container { display: block !important; overflow-x: auto; }
     .mobile-holdings { display: block; }
 
     /* Analysis cards: single column */
@@ -847,7 +848,7 @@ const PORTFOLIO_DATA = {
     </div>
 
     <!-- 리더보드 테이블 -->
-    <div class="table-container" style="margin-bottom:24px;overflow-x:auto;">
+    <div class="table-container ranking-container" style="margin-bottom:24px;overflow-x:auto;">
       <div class="table-header">
         <h3>🏆 포트폴리오 랭킹</h3>
         <button class="btn btn-primary" style="font-size:12px;padding:6px 14px;" id="btnPortForm" onclick="showRankView('portForm')">✏️ 내 포트 등록/업데이트</button>
