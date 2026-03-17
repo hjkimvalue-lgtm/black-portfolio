@@ -842,51 +842,33 @@ const PORTFOLIO_DATA = {
   <!-- RANKING -->
   <div class="section" id="ranking">
 
-    <!-- 방문자 통계 -->
-    <div class="comm-stats">
-      <div class="stat-card">
-        <div class="stat-num" id="statToday">—</div>
-        <div class="stat-label">오늘 접속</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" id="statTotal">—</div>
-        <div class="stat-label">누적 방문</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" id="statMembers">—</div>
-        <div class="stat-label">포트 참여자</div>
-      </div>
-    </div>
-
     <div class="firebase-notice" id="firebaseNotice" style="display:none;">
       ⚙️ <strong>Firebase 설정 필요</strong>
     </div>
 
-    <!-- 기본 화면: 리더보드 -->
-    <div id="rankMain">
-      <div class="table-container" style="margin-bottom:24px;">
-        <div class="table-header">
-          <h3>🏆 포트폴리오 랭킹</h3>
-          <button class="btn btn-primary" style="font-size:12px;padding:6px 14px;" onclick="showRankView('portForm')">✏️ 내 포트 등록/업데이트</button>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>순위</th>
-              <th>닉네임</th>
-              <th>올해 수익률</th>
-              <th>보유종목&비중</th>
-              <th>업데이트</th>
-            </tr>
-          </thead>
-          <tbody id="leaderboardBody">
-            <tr><td colspan="5" style="text-align:center;padding:28px;color:var(--text3);">로딩 중...</td></tr>
-          </tbody>
-        </table>
+    <!-- 리더보드 테이블 -->
+    <div class="table-container" style="margin-bottom:24px;overflow-x:auto;">
+      <div class="table-header">
+        <h3>🏆 포트폴리오 랭킹</h3>
+        <button class="btn btn-primary" style="font-size:12px;padding:6px 14px;" id="btnPortForm" onclick="showRankView('portForm')">✏️ 내 포트 등록/업데이트</button>
       </div>
+      <table>
+        <thead>
+          <tr>
+            <th>순위</th>
+            <th>닉네임</th>
+            <th>올해 수익률</th>
+            <th>보유종목&amp;비중</th>
+            <th>업데이트</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <tr><td colspan="5" style="text-align:center;padding:28px;color:var(--text3);">로딩 중...</td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <!-- 포트 등록 화면 -->
+    <!-- 포트 등록 폼 (숨김) -->
     <div id="rankPortForm" style="display:none;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
         <button class="btn" style="font-size:13px;padding:6px 14px;" onclick="showRankView('main')">← 뒤로</button>
@@ -916,7 +898,23 @@ const PORTFOLIO_DATA = {
   <!-- COMMUNITY (게시판) -->
   <div class="section" id="community">
 
-    <!-- 기본 화면: 게시글 목록 -->
+    <!-- 방문자 통계 -->
+    <div class="comm-stats">
+      <div class="stat-card">
+        <div class="stat-num" id="statToday">—</div>
+        <div class="stat-label">오늘 접속</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statTotal">—</div>
+        <div class="stat-label">누적 방문</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statMembers">—</div>
+        <div class="stat-label">포트 참여자</div>
+      </div>
+    </div>
+
+    <!-- 게시글 목록 -->
     <div id="commMain">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
         <h3 style="font-size:16px;font-weight:600;">💬 자유게시판</h3>
@@ -927,7 +925,7 @@ const PORTFOLIO_DATA = {
       </div>
     </div>
 
-    <!-- 글쓰기 화면 -->
+    <!-- 글쓰기 폼 (숨김) -->
     <div id="commPostForm" style="display:none;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
         <button class="btn" style="font-size:13px;padding:6px 14px;" onclick="showCommView('main')">← 뒤로</button>
@@ -1821,8 +1819,18 @@ let db = null;
 const FB_READY = FIREBASE_CONFIG.apiKey !== "REPLACE_API_KEY";
 
 function showRankView(view) {
-  document.getElementById('rankMain').style.display     = view === 'main'     ? 'block' : 'none';
-  document.getElementById('rankPortForm').style.display = view === 'portForm' ? 'block' : 'none';
+  const leaderTable = document.querySelector('#ranking .table-container');
+  const btnPort     = document.getElementById('btnPortForm');
+  const portForm    = document.getElementById('rankPortForm');
+  if (view === 'main') {
+    if (leaderTable) leaderTable.style.display = 'block';
+    if (btnPort)     btnPort.style.display     = 'inline-flex';
+    if (portForm)    portForm.style.display     = 'none';
+  } else {
+    if (leaderTable) leaderTable.style.display = 'none';
+    if (btnPort)     btnPort.style.display     = 'none';
+    if (portForm)    portForm.style.display     = 'block';
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
