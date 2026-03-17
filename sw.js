@@ -1,5 +1,5 @@
 // 블랙 가상포트폴리오 Service Worker
-const CACHE_NAME = 'black-portfolio-v1';
+const CACHE_NAME = 'black-portfolio-v2';
 const urlsToCache = [
   '/black-portfolio/portfolio_app.html',
   '/black-portfolio/manifest.json'
