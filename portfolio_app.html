@@ -11,6 +11,8 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>🖤 블랙 가상포트폴리오</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script>
 // === DATA_START ===
 const PORTFOLIO_DATA = {
@@ -660,6 +662,53 @@ const PORTFOLIO_DATA = {
     .toast { bottom: 80px; right: 16px; left: 16px; text-align: center; }
   }
 
+  /* ===== COMMUNITY ===== */
+  .comm-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 14px; margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px; text-align: center;
+    transition: border-color 0.2s;
+  }
+  .stat-card:hover { border-color: var(--accent); }
+  .stat-num {
+    font-size: 34px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace; color: var(--accent2);
+  }
+  .stat-label { font-size: 11px; color: var(--text3); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .firebase-notice {
+    background: rgba(124,92,252,0.08); border: 1px solid rgba(124,92,252,0.25);
+    border-radius: 12px; padding: 16px 20px; font-size: 13px;
+    color: var(--text2); margin-bottom: 20px; line-height: 1.7;
+  }
+  .firebase-notice strong { color: var(--accent2); }
+  .rank-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; border-radius: 50%;
+    font-size: 14px; font-weight: 700;
+  }
+  .rank-1 { background: rgba(251,191,36,0.15); color: #fbbf24; }
+  .rank-2 { background: rgba(148,163,184,0.15); color: #94a3b8; }
+  .rank-3 { background: rgba(180,83,9,0.15); color: #f97316; }
+  .rank-other { background: var(--bg3); color: var(--text3); font-size: 12px; }
+  .post-item {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 18px; margin-bottom: 10px;
+    display: flex; gap: 12px; align-items: flex-start; transition: border-color 0.2s;
+  }
+  .post-item:hover { border-color: rgba(124,92,252,0.3); }
+  .post-nick { font-weight: 600; font-size: 13px; color: var(--accent2); min-width: 72px; flex-shrink: 0; }
+  .post-content { font-size: 13px; color: var(--text); flex: 1; line-height: 1.7; word-break: break-word; }
+  .post-time { font-size: 11px; color: var(--text3); white-space: nowrap; font-family: 'JetBrains Mono', monospace; }
+  .owner-row { background: rgba(124,92,252,0.05) !important; }
+  @media (max-width: 768px) {
+    .comm-stats { grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .stat-card { padding: 14px 10px; }
+    .stat-num { font-size: 24px; }
+  }
+
   @media (max-width: 400px) {
     .summary-grid { gap: 8px; }
     .summary-card { padding: 12px; }
@@ -695,6 +744,7 @@ const PORTFOLIO_DATA = {
   <button class="nav-tab" data-tab="analysis">🔍 분석</button>
   <button class="nav-tab" data-tab="rules">📋 운용 규칙</button>
   <button class="nav-tab" data-tab="perf">📈 성과 비교</button>
+  <button class="nav-tab" data-tab="community">🏘️ 커뮤니티</button>
 </div>
 
 <div class="main">
@@ -784,6 +834,95 @@ const PORTFOLIO_DATA = {
       </div>
     </div>
     <div class="insight-box" id="thoughtsBox"></div>
+  </div>
+
+  <!-- COMMUNITY -->
+  <div class="section" id="community">
+
+    <!-- 방문자 통계 -->
+    <div class="comm-stats">
+      <div class="stat-card">
+        <div class="stat-num" id="statToday">—</div>
+        <div class="stat-label">오늘 접속</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statTotal">—</div>
+        <div class="stat-label">누적 방문</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statMembers">—</div>
+        <div class="stat-label">포트 참여자</div>
+      </div>
+    </div>
+
+    <div class="firebase-notice" id="firebaseNotice" style="display:none;">
+      ⚙️ <strong>Firebase 설정 필요</strong> — portfolio_app.html 내 <code>FIREBASE_CONFIG</code>를 채워주세요.
+    </div>
+
+    <!-- 포트폴리오 리더보드 -->
+    <div class="table-container" style="margin-bottom:24px;">
+      <div class="table-header">
+        <h3>📈 포트폴리오 리더보드</h3>
+        <span style="font-size:12px;color:var(--text3);">누적 수익률 기준</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>순위</th>
+            <th>닉네임</th>
+            <th>누적 수익률</th>
+            <th>한마디</th>
+            <th>업데이트</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <tr><td colspan="5" style="text-align:center;padding:28px;color:var(--text3);">로딩 중...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 내 포트 등록 -->
+    <div class="chart-card full" style="margin-bottom:24px;">
+      <h3 style="margin-bottom:16px;">✏️ 내 포트 등록 / 업데이트</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>닉네임 (최대 10자)</label>
+          <input id="portNick" type="text" placeholder="예: 투자왕" maxlength="10">
+        </div>
+        <div class="form-group">
+          <label>누적 수익률 (%)</label>
+          <input id="portReturn" type="number" step="0.01" placeholder="예: 5.23">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>한마디 (최대 50자)</label>
+        <input id="portComment" type="text" placeholder="예: 오늘도 수익! 🔥" maxlength="50">
+      </div>
+      <button class="btn btn-primary" onclick="submitPortfolio()">등록 / 업데이트</button>
+    </div>
+
+    <!-- 자유게시판 -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <h3 style="font-size:16px;font-weight:600;">💬 자유게시판</h3>
+      <span style="font-size:12px;color:var(--text3);">최근 50개</span>
+    </div>
+    <div class="chart-card full" style="margin-bottom:16px;">
+      <div class="form-row" style="margin-bottom:0;">
+        <div class="form-group" style="flex:0 0 140px;">
+          <label>닉네임</label>
+          <input id="postNick" type="text" placeholder="닉네임" maxlength="10">
+        </div>
+        <div class="form-group" style="flex:1;">
+          <label>내용 (최대 200자)</label>
+          <input id="postContent" type="text" placeholder="오늘 장 어떠셨나요? 💬" maxlength="200">
+        </div>
+      </div>
+      <button class="btn btn-primary" style="margin-top:8px;" onclick="submitPost()">글 올리기</button>
+    </div>
+    <div id="postsList">
+      <p style="text-align:center;color:var(--text3);padding:28px;">로딩 중...</p>
+    </div>
+
   </div>
 
   <!-- PERFORMANCE COMPARISON -->
@@ -927,6 +1066,7 @@ const PORTFOLIO_DATA = {
     <button class="bottom-tab" data-tab="journal"><span class="icon">🧠</span>일지</button>
     <button class="bottom-tab" data-tab="rules"><span class="icon">📋</span>규칙</button>
     <button class="bottom-tab" data-tab="perf"><span class="icon">📈</span>성과</button>
+    <button class="bottom-tab" data-tab="community"><span class="icon">🏘️</span>커뮤니티</button>
   </div>
 </div>
 
@@ -974,6 +1114,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderJournal();
   renderAnalysis();
   renderPerf();
+  initCommunity();
   initCharts();
 });
 
@@ -1639,6 +1780,161 @@ function renderPerf() {
       }
     }
   });
+}
+
+// ===== FIREBASE & COMMUNITY =====
+// ⚠️ Firebase 콘솔에서 복사한 값으로 교체하세요!
+const FIREBASE_CONFIG = {
+  apiKey:            "AIzaSyB86ptNQu6t--Pg8ohnhDXF5d5TGkGQ8dE",
+  authDomain:        "black-portfolio-95082.firebaseapp.com",
+  projectId:         "black-portfolio-95082",
+  storageBucket:     "black-portfolio-95082.firebasestorage.app",
+  messagingSenderId: "316545211282",
+  appId:             "1:316545211282:web:48f40866f5e8cb6a57ff4b"
+};
+
+let db = null;
+const FB_READY = FIREBASE_CONFIG.apiKey !== "REPLACE_API_KEY";
+
+function initCommunity() {
+  if (!FB_READY) {
+    document.getElementById('firebaseNotice').style.display = 'block';
+    document.getElementById('leaderboardBody').innerHTML =
+      '<tr><td colspan="5" style="text-align:center;padding:28px;color:var(--text3);">⚙️ Firebase 설정 후 이용 가능합니다</td></tr>';
+    document.getElementById('postsList').innerHTML =
+      '<p style="text-align:center;color:var(--text3);padding:28px;">⚙️ Firebase 설정 후 이용 가능합니다</p>';
+    ['statToday','statTotal','statMembers'].forEach(id => document.getElementById(id).textContent = '—');
+    return;
+  }
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+  } catch(e) {}
+  db = firebase.firestore();
+  trackVisit();
+  loadStats();
+  loadLeaderboard();
+  loadPosts();
+}
+
+async function trackVisit() {
+  if (!db) return;
+  const today = new Date().toISOString().split('T')[0];
+  // 세션당 한 번만 카운트 (새로고침 중복 방지)
+  const sessionKey = `sess_${today}`;
+  const isNew = !sessionStorage.getItem(sessionKey);
+  sessionStorage.setItem(sessionKey, '1');
+  const ref = db.collection('stats').doc('global');
+  const update = { totalVisitors: firebase.firestore.FieldValue.increment(1) };
+  if (isNew) update[`daily_${today}`] = firebase.firestore.FieldValue.increment(1);
+  await ref.set(update, { merge: true }).catch(() => {});
+}
+
+function loadStats() {
+  if (!db) return;
+  const today = new Date().toISOString().split('T')[0];
+  db.collection('stats').doc('global').onSnapshot(doc => {
+    const d = doc.data() || {};
+    document.getElementById('statToday').textContent = ((d[`daily_${today}`] || 0)).toLocaleString();
+    document.getElementById('statTotal').textContent = (d.totalVisitors || 0).toLocaleString();
+  });
+  db.collection('portfolios').onSnapshot(snap => {
+    document.getElementById('statMembers').textContent = (snap.size + 1).toLocaleString(); // +1 for 블랙
+  });
+}
+
+function loadLeaderboard() {
+  if (!db) return;
+  db.collection('portfolios').orderBy('totalReturn', 'desc').onSnapshot(snap => {
+    const myEntry = {
+      nickname: '🖤 블랙 (본인)', totalReturn: D.summary.totalReturn,
+      comment: '블랙 가상포트', isOwner: true, updatedAt: null
+    };
+    const others = snap.docs.map(doc => ({
+      nickname: doc.data().nickname || '익명',
+      totalReturn: parseFloat(doc.data().totalReturn) || 0,
+      comment: doc.data().comment || '',
+      updatedAt: doc.data().updatedAt?.toDate?.() || null,
+      isOwner: false
+    }));
+    const all = [myEntry, ...others].sort((a, b) => b.totalReturn - a.totalReturn);
+    const medals = ['🥇', '🥈', '🥉'];
+    document.getElementById('leaderboardBody').innerHTML = all.map((p, i) => {
+      const rankClass = i < 3 ? `rank-${i+1}` : 'rank-other';
+      const rankLabel = i < 3 ? medals[i] : (i + 1);
+      const timeStr = p.updatedAt ? timeAgo(p.updatedAt) : '—';
+      return `
+        <tr class="${p.isOwner ? 'owner-row' : ''}">
+          <td><span class="rank-badge ${rankClass}">${rankLabel}</span></td>
+          <td><strong>${escapeHtml(p.nickname)}</strong></td>
+          <td><span class="pnl-badge ${p.totalReturn >= 0 ? 'positive' : 'negative'}">${fmtPct(p.totalReturn)}</span></td>
+          <td style="font-size:13px;color:var(--text2);">${escapeHtml(p.comment)}</td>
+          <td style="font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace">${timeStr}</td>
+        </tr>`;
+    }).join('') || '<tr><td colspan="5" style="text-align:center;padding:28px;color:var(--text3);">첫 번째로 등록해보세요!</td></tr>';
+  });
+}
+
+async function submitPortfolio() {
+  if (!db) { showToast('Firebase 설정이 필요합니다'); return; }
+  const nick = document.getElementById('portNick').value.trim();
+  const ret  = parseFloat(document.getElementById('portReturn').value);
+  const comment = document.getElementById('portComment').value.trim();
+  if (!nick) { showToast('닉네임을 입력해주세요'); return; }
+  if (isNaN(ret)) { showToast('수익률을 입력해주세요'); return; }
+  await db.collection('portfolios').doc(nick).set({
+    nickname: nick, totalReturn: ret, comment,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  }).catch(e => showToast('오류: ' + e.message));
+  showToast(`✅ ${nick} 포트 등록 완료!`);
+  ['portNick','portReturn','portComment'].forEach(id => document.getElementById(id).value = '');
+}
+
+function loadPosts() {
+  if (!db) return;
+  db.collection('posts').orderBy('timestamp', 'desc').limit(50).onSnapshot(snap => {
+    if (snap.empty) {
+      document.getElementById('postsList').innerHTML =
+        '<p style="text-align:center;color:var(--text3);padding:28px;">첫 번째 글을 남겨보세요! 👋</p>';
+      return;
+    }
+    document.getElementById('postsList').innerHTML = snap.docs.map(doc => {
+      const d = doc.data();
+      const t = d.timestamp?.toDate?.() ? timeAgo(d.timestamp.toDate()) : '방금';
+      return `<div class="post-item">
+        <span class="post-nick">${escapeHtml(d.nickname || '익명')}</span>
+        <span class="post-content">${escapeHtml(d.content || '')}</span>
+        <span class="post-time">${t}</span>
+      </div>`;
+    }).join('');
+  });
+}
+
+async function submitPost() {
+  if (!db) { showToast('Firebase 설정이 필요합니다'); return; }
+  const nick    = document.getElementById('postNick').value.trim();
+  const content = document.getElementById('postContent').value.trim();
+  if (!nick)    { showToast('닉네임을 입력해주세요'); return; }
+  if (!content) { showToast('내용을 입력해주세요'); return; }
+  await db.collection('posts').add({
+    nickname: nick, content,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  }).catch(e => showToast('오류: ' + e.message));
+  document.getElementById('postContent').value = '';
+  showToast('💬 게시글 등록 완료!');
+}
+
+function timeAgo(date) {
+  const s = Math.floor((Date.now() - date.getTime()) / 1000);
+  if (s < 60)    return '방금';
+  if (s < 3600)  return Math.floor(s / 60) + '분 전';
+  if (s < 86400) return Math.floor(s / 3600) + '시간 전';
+  return Math.floor(s / 86400) + '일 전';
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 // ===== TRADE MODAL =====
