@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="블랙포트">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>🖤 블랙 가상포트폴리오</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+// === DATA_START ===
+const PORTFOLIO_DATA = {
+  "lastUpdated": "2026-03-17 13:59",
+  "latestNote": "1주차_1일.md",
+  "inceptionDate": "2026-03-13",
+  "totalAsset": 1000000000,
+  "summary": {
+    "totalReturn": 1.61,
+    "totalPnl": 16130000.0,
+    "unrealizedPnl": 22710000.0,
+    "realizedPnl": -6580000.0
+  },
+  "krWeight": 40.0,
+  "usWeight": 60.0,
+  "krCount": 4,
+  "usCount": 5,
+  "krReturn": -1.44,
+  "usReturn": 2.4,
+  "holdings": [
+    {
+      "name": "NVDA",
+      "code": "NVDA",
+      "market": "US",
+      "weight": 20.0,
+      "buyPrice": 180.25,
+      "currentPrice": 182.55,
+      "returnPct": 1.28,
+      "pnl": 2560000,
+      "investAmt": 200000000,
+      "status": "hold"
+    },
+    {
+      "name": "MU",
+      "code": "MU",
+      "market": "US",
+      "weight": 15.0,
+      "buyPrice": 426.13,
+      "currentPrice": 445.8,
+      "returnPct": 4.62,
+      "pnl": 6930000,
+      "investAmt": 150000000,
+      "status": "hold"
+    },
+    {
+      "name": "대덕전자",
+      "code": "008060",
+      "market": "KR",
+      "weight": 15.0,
+      "buyPrice": 64885.0,
+      "currentPrice": 67000.0,
+      "returnPct": 3.26,
+      "pnl": 4890000,
+      "investAmt": 150000000,
+      "status": "hold"
+    },
+    {
+      "name": "오킨스전자",
+      "code": "080580",
+      "market": "KR",
+      "weight": 10.0,
+      "buyPrice": 18680.0,
+      "currentPrice": 18970.0,
+      "returnPct": 1.55,
+      "pnl": 1550000,
+      "investAmt": 100000000,
+      "status": "hold"
+    },
+    {
+      "name": "저스템",
+      "code": "417840",
+      "market": "KR",
+      "weight": 10.0,
+      "buyPrice": 7140.0,
+      "currentPrice": 6810.0,
+      "returnPct": -4.62,
+      "pnl": -4620000,
+      "investAmt": 100000000,
+      "status": "hold"
+    },
+    {
+      "name": "AVGO",
+      "code": "AVGO",
+      "market": "US",
+      "weight": 10.0,
+      "buyPrice": 322.16,
+      "currentPrice": 324.55,
+      "returnPct": 0.74,
+      "pnl": 740000,
+      "investAmt": 100000000,
+      "status": "hold"
+    },
+    {
+      "name": "MRVL",
+      "code": "MRVL",
+      "market": "US",
+      "weight": 8.0,
+      "buyPrice": 87.86,
+      "currentPrice": 91.23,
+      "returnPct": 3.84,
+      "pnl": 3072000,
+      "investAmt": 80000000,
+      "status": "hold"
+    },
+    {
+      "name": "META",
+      "code": "META",
+      "market": "US",
+      "weight": 7.0,
+      "buyPrice": 613.71,
+      "currentPrice": 623.13,
+      "returnPct": 1.53,
+      "pnl": 1071000,
+      "investAmt": 70000000,
+      "status": "hold"
+    },
+    {
+      "name": "케이엠더블유",
+      "code": "032500",
+      "market": "KR",
+      "weight": 5.0,
+      "buyPrice": 26400.0,
+      "currentPrice": 26000.0,
+      "returnPct": -1.52,
+      "pnl": -760000,
+      "investAmt": 50000000,
+      "status": "hold"
+    }
+  ],
+  "sold": [
+    {
+      "name": "태웅",
+      "code": "044490",
+      "market": "KR",
+      "weight": 0,
+      "buyPrice": 48950.0,
+      "currentPrice": 44800.0,
+      "returnPct": -8.48,
+      "pnl": 0,
+      "investAmt": 0,
+      "status": "sold",
+      "sellPrice": 44800.0
+    }
+  ],
+  "trades": [
+    {
+      "date": "2026-03-16",
+      "type": "sell",
+      "ticker": "태웅",
+      "reason": "손절 규칙 충족 (-8.48% ≥ -8%) + 차트 하락 신호"
+    },
+    {
+      "date": "2026-03-16",
+      "type": "add",
+      "ticker": "대덕전자",
+      "reason": "GTC 2026 직접 수혜(AI 서버 PCB·기판 수요 폭발) + 기관 순매수(+40,786주) + 반도체 섹터 +4.34% 최강세 + 250일 고점(69,000) 근접 돌파 시도"
+    }
+  ],
+  "analysis": [
+    {
+      "name": "오킨스전자",
+      "fundamental": "🟢",
+      "chart": "🟡",
+      "sentiment": "🟢",
+      "total": "🟢",
+      "note": "극단 저평가"
+    },
+    {
+      "name": "저스템",
+      "fundamental": "🟢",
+      "chart": "🟡",
+      "sentiment": "🟢",
+      "total": "🟢",
+      "note": "저평가"
+    },
+    {
+      "name": "대덕전자",
+      "fundamental": "🟢",
+      "chart": "🟡",
+      "sentiment": "🟢",
+      "total": "🟢",
+      "note": "컨센 하회 저평가"
+    },
+    {
+      "name": "태웅",
+      "fundamental": "🟢",
+      "chart": "🟡",
+      "sentiment": "🟡",
+      "total": "🟡",
+      "note": "시총 1조 이하 저평가"
+    },
+    {
+      "name": "케이엠더블유",
+      "fundamental": "🟢",
+      "chart": "🟢",
+      "sentiment": "🟢",
+      "total": "🟢",
+      "note": "TP +32%"
+    },
+    {
+      "name": "NVDA",
+      "fundamental": "🟢",
+      "chart": "🟡",
+      "sentiment": "🟢",
+      "total": "🟢",
+      "note": "PEG 0.18"
+    },
+    {
+      "name": "MU",
+      "fundamental": "🟢",
+      "chart": "🟢",
+      "sentiment": "🟢",
+      "total": "🟢",
+      "note": "IB 컨센 매수"
+    },
+    {
+      "name": "AVGO",
+      "fundamental": "🟢",
+      "chart": "🟡",
+      "sentiment": "🟡",
+      "total": "🟡",
+      "note": "AI ASIC 독점"
+    },
+    {
+      "name": "MRVL",
+      "fundamental": "🟢",
+      "chart": "🟡",
+      "sentiment": "🟢",
+      "total": "🟢",
+      "note": "서프라이즈 확인"
+    },
+    {
+      "name": "META",
+      "fundamental": "🟢",
+      "chart": "🟡",
+      "sentiment": "🟡",
+      "total": "🟡",
+      "note": "FCF 강건"
+    }
+  ],
+  "thoughts": "- 첫날 손절이 주는 교훈: 거래비용 1%가 실제로 체감된다. 태웅 매도로 실현손실 -658만원 중 거래비용만 64만원. \"잦은 매매는 거래비용 누적으로 수익률 훼손\"이라는 규칙이 피부로 와닿는다.\n- 포트가 반도체 편중(대덕전자 15%, 저스템 10%, 오킨스 10% = 국내의 87.5%)이다. 이것은 의도적 집중이다. GTC(16~19일), FOMC(18일), 마이크론 실적(18일)이 이번 주 방향을 결정할 3대 이벤트. 반도체 사이클이 역대 최강(Goldman: \"역사상 가장 강한 메모리 사이클\")이라는 확신 하에 집중 유지.\n- KMW의 기관 대량 순매도(-18.8만주)가 가장 큰 경계 신호. 장중 신고가 후 급락은 기관이 고점 매도한 전형적 패턴. 3/18 실적 발표가 분기점. 실적이 기대 이하면 즉시 대응.\n- 목계 철학 자기점검: 태웅 손절은 욕심이 아닌 규칙 준수. 평정심 유지. 결과(-509만원)에 흔들리지 않고 과정을 신뢰한다.",
+  "review": "(미국) 미국 포트 5종목 전량 유지, 변경 없음. 진입 첫 거래일에 전 종목 양봉 마감(+0.74%~+4.62%). MU가 +4.62%로 독보적 강세 — HBM·DRAM 수요 기대 + TD Cowen TP 상향이 동시에 작용. FOMC(3/18)·마이크론 실적(3/18) 이벤트 직전이라 포지션 변경보다 관망이 합리적이라 판단했다. 거래비용 1% 규칙이 \"움직이지 않을 이유\"를 정량화해준다.\n\n1주차 첫날부터 손절이 발생했다. 태웅은 에너지/풍력 단조 테마로 3/13 종가(48,950)에 진입했는데, 이미 3/11 고점(52,400) 부근이었다. 중동 사태로 유가가 $100을 돌파했지만, 에너지 섹터에 오히려 양날의 검이 됐다 — 불확실성 증가가 차익실현을 유발했다. \"유가 급등 = 에너지주 상승\"이라는 단순 공식이 통하지 않는 장이었다.\n\n반면 대덕전자는 GTC 개막과 함께 반도체 PCB 수요 확대 흐름을 정확히 탔다. +5.85% 강세에 기관 순매수까지 동반. 비중 확대 결정의 근거가 명확했다.\n\n놓친 신호: 태웅의 3/10~11 급등(40,100→52,400, +30%)은 전형적 과열 패턴이었고, 3/13 진입 시점에서 이미 조정이 시작되고 있었다. 진입 타이밍이 늦었다. 다음에는 급등 후 2~3일 이내 진입은 더 신중하게.",
+  "priority": "(국내) 1순위 수급: 대덕전자 기관순매수 vs 태웅 기관매수에도 가격 급락 → 수급과 가격이 엇갈릴 때 가격을 우선\n2순위 매크로: GTC 2026 개막(반도체 직접 촉매), 유가 $100(에너지 양날의 검), FOMC 대기\n3순위 차트: 태웅 -8.48% 긴 음봉(손절 트리거), 대덕전자 양봉 돌파, KMW 윗꼬리 경계\n4순위 펀더멘털: 저스템 IR(HBM 필수장비, 수주 40%↑), 대덕전자 AI PCB 구조적 수요\n\n(미국) 1순위 수급: SOX +1.96% 전면 강세, 메모리 폭등(MU +4.17%, SK하이닉스 +7.03%). 반도체 사이클 온기 실질적 확인.\n2순위 매크로: VIX -12.91% 급락 = 리스크온. DXY 하락 = 성장주 우호. 이벤트 전 안도 랠리 성격.\n3순위 차트: MU·MRVL MA 돌파 강세. AVGO·META MA 하회로 차별화. 강한 쪽에 이미 비중이 실려 있어 포트 구조 양호.\n4순위 펀더멘털: MU IB 목표가 연쇄 상향(TD Cowen, RBC, Wedbush 등). HBM 매진·DRAM 타이트 내러티브 강화.\n\n오늘 수급과 가격이 엇갈리는 케이스(태웅: 기관 순매수 but 가격 -8.48%)를 경험. 결론: 기관 수급 신호보다 가격 행동(price action)이 더 신뢰할 수 있는 즉시 신호다. 수급은 중기 방향성, 차트는 단기 타이밍.",
+  "tradeDecisions": {
+    "kr": "**매도: 태웅 전량 (1,430주 × 44,800원)**\n- 사유: 손절 규칙 충족 (-8.48% ≥ -8%) + 차트 하락 신호\n- 진입가 48,950 → 매도가 44,800, 거래비용 1% 차감\n- 실현손실: -658만원 (순매도액 6,342만원)\n- 3/11 고점 52,400에서 3거래일 만에 -14.5% 급락. 에너지/조선 섹터 전반 차익실현 + 코스닥 -1.27% 약세 동반. 기관 순매수(+57,152주)에도 개인 매도 물량이 압도하여 가격 하방 돌파.\n\n**비중 확대: 대덕전자 (946주 추가, 67,000원)**\n- 비중 8% → 15% (1,263주 → 2,209주)\n- 가중평균 단가: 64,885원\n- 사유: GTC 2026 직접 수혜(AI 서버 PCB·기판 수요 폭발) + 기관 순매수(+40,786주) + 반도체 섹터 +4.34% 최강세 + 250일 고점(69,000) 근접 돌파 시도\n- Digitimes: \"AI 서버 붐, PCB·CCL·인터커넥트 서플라이어 수요 폭발\" 헤드라인 직접 수혜주\n\n**유지: 오킨스전자, 저스템, 케이엠더블유**\n- 오킨스전자: +1.55% 양봉 마감. 반도체 테스트 관련 업종. MA5(18,794) 위. 거래량 감소(50.9만)는 주시.\n- 저스템: -4.62% 하락이나 펀더멘털 강력. 네프콘 IR — 수주 40%↑, 백로그 150억+, 2세대 JFS 양산 개시. HBM 수율 필수 장비. 기관 순매도(-59,589)는 경계 요소이나 업황 변곡점 확신.\n- 케이엠더블유: 장중 신고가 28,550 → 종가 26,000 (윗꼬리 긴 음봉). 기관 대량 순매도(-188,245주) ⚠️. 그러나 5G 주파수 경매 빅사이클 초입 + 하나증권 목표주가 35,000원. 3/18 실적 발표 이후 방향성 재판단.",
+    "us": "**전 종목 유지 — 변경 없음**\n\nFOMC(3/18)와 마이크론 실적(3/18) 두 빅이벤트가 이번 주 내로 예정. 이벤트 전 포지션 변경은 거래비용만 낭비할 가능성이 높다. 결과 확인 후 수요일 판단이 합리적.\n\n**유지: NVDA (20%)**\n- GTC 2026 진행 중(3/16~19). 이벤트 촉매 살아 있는 상태에서 축소는 시기상조.\n- 차트: MA5(183.37)·MA20(184.95) 소폭 하회, 횡보 구간. 하방은 $179~180 지지.\n- SOX 내 +1.45% 안정적 상승. 블랙웰 출하 지속.\n\n**유지: MU (15%)**\n- 3대축 완벽 정렬. 차트 MA5(419.80)·MA20(410.55) 모두 상향 돌파. 거래량 3,164만주.\n- 수급: 메모리 섹터 폭등(SK하이닉스 +7.03%, Kioxia +7.36%). MU +4.62% 동반.\n- 펀더멘털: TD Cowen TP $450→$500 상향, Rosenblatt Buy $500 유지. HBM 2026 매진. Q2 EPS +450% YoY.\n- 3/18 실적 발표 = 핵심 촉매. 확신 최상.\n\n**유지: AVGO (10%)**\n- 차트: MA5(333.36)·MA20(329.40) 하회. 3/13~16 이틀 연속 하락, $322~324 횡보.\n- SOX 내 +0.78%로 상대적 부진. AI ASIC·네트워킹 구조적 스토리는 건재하나 단기 모멘텀 약.\n- 교체 검토했으나 거래비용 1% 감안 시 매도 메리트 불충분. 1~2일 추세 회복 여부 관찰.\n\n**유지: MRVL (8%)**\n- 차트: MA5(90.10)·MA20(83.01) 모두 상회. 3/6 실적 서프라이즈 후 $75→$91 랠리 유지.\n- 수급: SOX 내 +4.48% 강세 TOP4. AI 커스텀 ASIC 기대감 재점화.\n- 포스트 어닝 모멘텀 구간. 비중 8% 적정.\n\n**유지: META (7%)**\n- 차트: MA5(636.41)·MA20(646.06) 모두 하회. 3일 연속 하락($654→$623). 약세 신호.\n- 반도체 직접 수혜 아닌 빅테크. 가상포트 반도체 집중 전략에 다소 이질적.\n- 그러나: +1.53% 수익 상태에서 매도 시 거래비용 1% 차감하면 실질 +0.53%만 남음. 교체 종목의 즉시 업사이드가 불확실한 상태에서 비합리적.\n- AI 인프라 지출자로서 반도체 수요의 원천 — 간접 연결 유지. FOMC 이후 재평가."
+  },
+  "endComment": "### 복기\n(미국) 미국 포트 5종목 전량 유지, 변경 없음. 진입 첫 거래일에 전 종목 양봉 마감(+0.74%~+4.62%). MU가 +4.62%로 독보적 강세 — HBM·DRAM 수요 기대 + TD Cowen TP 상향이 동시에 작용. FOMC(3/18)·마이크론 실적(3/18) 이벤트 직전이라 포지션 변경보다 관망이 합리적이라 판단했다. 거래비용 1% 규칙이 \"움직이지 않을 이유\"를 정량화해준다.\n\n1주차 첫날부터 손절이 발생했다. 태웅은 에너지/풍력 단조 테마로 3/13 종가(48,950)에 진입했는데, 이미 3/11 고점(52,400) 부근이었다. 중동 사태로 유가가 $100을 돌파했지만, 에너지 섹터에 오히려 양날의 검이 됐다 — 불확실성 증가가 차익실현을 유발했다. \"유가 급등 = 에너지주 상승\"이라는 단순 공식이 통하지 않는 장이었다.\n\n반면 대덕전자는 GTC 개막과 함께 반도체 PCB 수요 확대 흐름을 정확히 탔다. +5.85% 강세에 기관 순매수까지 동반. 비중 확대 결정의 근거가 명확했다.\n\n놓친 신호: 태웅의 3/10~11 급등(40,100→52,400, +30%)은 전형적 과열 패턴이었고, 3/13 진입 시점에서 이미 조정이 시작되고 있었다. 진입 타이밍이 늦었다. 다음에는 급등 후 2~3일 이내 진입은 더 신중하게.\n\n### 판단 우선순위 (오늘 적용)\n(국내) 1순위 수급: 대덕전자 기관순매수 vs 태웅 기관매수에도 가격 급락 → 수급과 가격이 엇갈릴 때 가격을 우선\n2순위 매크로: GTC 2026 개막(반도체 직접 촉매), 유가 $100(에너지 양날의 검), FOMC 대기\n3순위 차트: 태웅 -8.48% 긴 음봉(손절 트리거), 대덕전자 양봉 돌파, KMW 윗꼬리 경계\n4순위 펀더멘털: 저스템 IR(HBM 필수장비, 수주 40%↑), 대덕전자 AI PCB 구조적 수요\n\n(미국) 1순위 수급: SOX +1.96% 전면 강세, 메모리 폭등(MU +4.17%, SK하이닉스 +7.03%). 반도체 사이클 온기 실질적 확인.\n2순위 매크로: VIX -12.91% 급락 = 리스크온. DXY 하락 = 성장주 우호. 이벤트 전 안도 랠리 성격.\n3순위 차트: MU·MRVL MA 돌파 강세. AVGO·META MA 하회로 차별화. 강한 쪽에 이미 비중이 실려 있어 포트 구조 양호.\n4순위 펀더멘털: MU IB 목표가 연쇄 상향(TD Cowen, RBC, Wedbush 등). HBM 매진·DRAM 타이트 내러티브 강화.\n\n오늘 수급과 가격이 엇갈리는 케이스(태웅: 기관 순매수 but 가격 -8.48%)를 경험. 결론: 기관 수급 신호보다 가격 행동(price action)이 더 신뢰할 수 있는 즉시 신호다. 수급은 중기 방향성, 차트는 단기 타이밍.\n\n### 블랙의 생각 변화\n- 첫날 손절이 주는 교훈: 거래비용 1%가 실제로 체감된다. 태웅 매도로 실현손실 -658만원 중 거래비용만 64만원. \"잦은 매매는 거래비용 누적으로 수익률 훼손\"이라는 규칙이 피부로 와닿는다.\n- 포트가 반도체 편중(대덕전자 15%, 저스템 10%, 오킨스 10% = 국내의 87.5%)이다. 이것은 의도적 집중이다. GTC(16~19일), FOMC(18일), 마이크론 실적(18일)이 이번 주 방향을 결정할 3대 이벤트. 반도체 사이클이 역대 최강(Goldman: \"역사상 가장 강한 메모리 사이클\")이라는 확신 하에 집중 유지.\n- KMW의 기관 대량 순매도(-18.8만주)가 가장 큰 경계 신호. 장중 신고가 후 급락은 기관이 고점 매도한 전형적 패턴. 3/18 실적 발표가 분기점. 실적이 기대 이하면 즉시 대응.\n- 목계 철학 자기점검: 태웅 손절은 욕심이 아닌 규칙 준수. 평정심 유지. 결과(-509만원)에 흔들리지 않고 과정을 신뢰한다.",
+  "dailyReturns": [
+    {
+      "date": "2026-03-16",
+      "total": 1.61,
+      "kr": -1.44,
+      "us": 2.4,
+      "kospi": 1.14,
+      "sp500": 1.01
+    }
+  ],
+  "best": {
+    "name": "MU",
+    "returnPct": 4.62,
+    "pnl": 6930000
+  },
+  "worst": {
+    "name": "저스템",
+    "returnPct": -4.62,
+    "pnl": -4620000
+  }
+};
+// === DATA_END ===
+</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #12121a;
+    --bg3: #1a1a26;
+    --bg4: #22222e;
+    --border: #2a2a3a;
+    --text: #e8e8f0;
+    --text2: #a0a0b8;
+    --text3: #6a6a80;
+    --accent: #7c5cfc;
+    --accent2: #9d7dff;
+    --green: #22c55e;
+    --green-bg: rgba(34,197,94,0.1);
+    --red: #ef4444;
+    --red-bg: rgba(239,68,68,0.1);
+    --yellow: #f59e0b;
+    --blue: #3b82f6;
+    --kr-flag: #cd313a;
+    --us-flag: #3c3b6e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; overflow-x: hidden;
+  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+
+  .header {
+    background: linear-gradient(135deg, var(--bg2), var(--bg3));
+    border-bottom: 1px solid var(--border);
+    padding: 20px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px);
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, var(--accent), #4f46e5);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+  }
+  .header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+  .header .subtitle { font-size: 12px; color: var(--text3); margin-top: 2px; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .date-badge {
+    background: var(--bg4); border: 1px solid var(--border);
+    padding: 6px 14px; border-radius: 8px; font-size: 13px;
+    color: var(--text2); font-family: 'JetBrains Mono', monospace;
+  }
+  .update-info { font-size: 11px; color: var(--text3); text-align: right; }
+
+  .nav-tabs {
+    display: flex; gap: 4px; padding: 12px 32px;
+    background: var(--bg); border-bottom: 1px solid var(--border); overflow-x: auto;
+  }
+  .nav-tab {
+    padding: 8px 20px; border-radius: 8px; font-size: 14px; font-weight: 500;
+    color: var(--text3); cursor: pointer; transition: all 0.2s;
+    border: none; background: none; white-space: nowrap;
+  }
+  .nav-tab:hover { color: var(--text2); background: var(--bg3); }
+  .nav-tab.active { color: var(--text); background: var(--accent); }
+
+  .main { padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .summary-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px; margin-bottom: 28px;
+  }
+  .summary-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px; transition: border-color 0.2s;
+  }
+  .summary-card:hover { border-color: var(--accent); }
+  .summary-card .label { font-size: 12px; color: var(--text3); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .summary-card .value { font-size: 26px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .summary-card .sub { font-size: 12px; color: var(--text3); margin-top: 6px; }
+  .positive { color: var(--green); }
+  .negative { color: var(--red); }
+
+  .table-container {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden; margin-bottom: 28px;
+  }
+  .table-header {
+    padding: 16px 20px; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .table-header h3 { font-size: 16px; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: left; padding: 12px 16px; font-size: 11px; font-weight: 600;
+    color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border); background: var(--bg3);
+  }
+  td {
+    padding: 14px 16px; font-size: 14px;
+    border-bottom: 1px solid rgba(42,42,58,0.5); vertical-align: middle;
+  }
+  tr:hover td { background: rgba(124,92,252,0.03); }
+  tr:last-child td { border-bottom: none; }
+
+  .ticker-cell { display: flex; align-items: center; gap: 10px; }
+  .market-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 18px; border-radius: 4px;
+    font-size: 9px; font-weight: 700; color: #fff; letter-spacing: 0.3px;
+  }
+  .market-badge.kr { background: var(--kr-flag); }
+  .market-badge.us { background: var(--us-flag); }
+  .ticker-name { font-weight: 600; }
+  .ticker-code { font-size: 11px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+
+  .weight-bar-container { display: flex; align-items: center; gap: 8px; }
+  .weight-bar { width: 60px; height: 6px; background: var(--bg4); border-radius: 3px; overflow: hidden; }
+  .weight-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+  .pnl-cell { font-family: 'JetBrains Mono', monospace; font-weight: 500; }
+  .pnl-badge {
+    display: inline-block; padding: 3px 8px; border-radius: 6px;
+    font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace;
+  }
+  .pnl-badge.positive { background: var(--green-bg); }
+  .pnl-badge.negative { background: var(--red-bg); }
+
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+  .status-dot.hold { background: var(--green); }
+  .status-dot.sold { background: var(--red); }
+
+  .chart-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px;
+  }
+  .chart-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px;
+  }
+  .chart-card.full { grid-column: 1 / -1; }
+  .chart-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 16px; }
+  .chart-wrapper { position: relative; height: 280px; }
+
+  .trade-item {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px; margin-bottom: 12px;
+  }
+  .trade-item-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  }
+  .trade-type {
+    display: inline-flex; align-items: center;
+    padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 700;
+  }
+  .trade-type.buy { background: var(--green-bg); color: var(--green); }
+  .trade-type.sell { background: var(--red-bg); color: var(--red); }
+  .trade-type.add { background: rgba(59,130,246,0.1); color: var(--blue); }
+  .trade-date { font-size: 12px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+  .trade-detail { font-size: 13px; color: var(--text2); line-height: 1.7; }
+  .trade-detail strong { color: var(--text); }
+
+  .analysis-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px; margin-bottom: 28px;
+  }
+  .analysis-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px;
+  }
+  .analysis-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+  .signal-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; border-bottom: 1px solid rgba(42,42,58,0.3); font-size: 13px;
+  }
+  .signal-row:last-child { border-bottom: none; }
+  .signal-icon { font-size: 16px; }
+
+  .insight-box {
+    background: linear-gradient(135deg, rgba(124,92,252,0.08), rgba(79,70,229,0.05));
+    border: 1px solid rgba(124,92,252,0.2); border-radius: 14px;
+    padding: 20px; margin-bottom: 28px;
+  }
+  .insight-box h3 { font-size: 15px; font-weight: 600; margin-bottom: 10px; color: var(--accent2); }
+  .insight-box p { font-size: 13px; color: var(--text2); line-height: 1.8; }
+
+  .rules-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 24px; margin-bottom: 16px;
+  }
+  .rules-card h3 {
+    font-size: 16px; font-weight: 600; margin-bottom: 16px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--border);
+  }
+  .rule-item {
+    padding: 10px 0; font-size: 13px; color: var(--text2); line-height: 1.7;
+    border-bottom: 1px solid rgba(42,42,58,0.3);
+  }
+  .rule-item:last-child { border-bottom: none; }
+  .rule-item strong { color: var(--text); }
+
+  /* Daily returns timeline */
+  .timeline { margin-bottom: 28px; }
+  .timeline-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 12px 16px;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; margin-bottom: 8px;
+  }
+  .timeline-date { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text3); min-width: 90px; }
+  .timeline-bars { flex: 1; display: flex; gap: 12px; align-items: center; }
+  .timeline-bar-label { font-size: 11px; color: var(--text3); min-width: 30px; }
+  .timeline-bar { height: 8px; border-radius: 4px; min-width: 2px; }
+
+  .modal-overlay {
+    display: none; position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7); z-index: 200;
+    justify-content: center; align-items: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px;
+    max-width: 560px; width: 90%; max-height: 80vh; overflow-y: auto;
+  }
+  .modal h2 { font-size: 18px; margin-bottom: 20px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 12px; color: var(--text3); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 10px 14px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-size: 14px; font-family: inherit;
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .btn {
+    padding: 10px 20px; border: none; border-radius: 8px;
+    font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent2); }
+  .btn-secondary { background: var(--bg4); color: var(--text2); }
+  .btn-secondary:hover { background: var(--border); }
+  .btn-group { display: flex; gap: 8px; margin-top: 20px; justify-content: flex-end; }
+
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 20px; font-size: 14px; z-index: 300;
+    transform: translateY(100px); opacity: 0; transition: all 0.3s ease;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ===== JOURNAL SECTION ===== */
+  .journal-block {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px; margin-bottom: 16px;
+  }
+  .journal-block h3 {
+    font-size: 15px; font-weight: 600; margin-bottom: 14px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .journal-block .journal-text {
+    font-size: 13px; color: var(--text2); line-height: 1.9;
+    white-space: pre-wrap; word-break: keep-all;
+  }
+  .journal-block .journal-text strong,
+  .journal-block .journal-text b { color: var(--text); font-weight: 600; }
+  .journal-highlight {
+    background: linear-gradient(135deg, rgba(124,92,252,0.08), rgba(79,70,229,0.05));
+    border-color: rgba(124,92,252,0.2);
+  }
+
+  /* ===== MOBILE CARD VIEW (hidden on desktop) ===== */
+  .mobile-holdings { display: none; }
+  .mobile-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 16px; margin-bottom: 12px;
+  }
+  .mobile-card-top {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+  }
+  .mobile-card-name { display: flex; align-items: center; gap: 8px; }
+  .mobile-card-name .ticker-name { font-size: 16px; }
+  .mobile-card-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 6px 0; font-size: 13px; color: var(--text2);
+  }
+  .mobile-card-row .val { font-family: 'JetBrains Mono', monospace; font-weight: 500; color: var(--text); }
+  .mobile-card-divider { height: 1px; background: var(--border); margin: 8px 0; }
+
+  /* ===== BOTTOM NAV (mobile only) ===== */
+  .bottom-nav {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--bg2); border-top: 1px solid var(--border);
+    padding: 6px 0; padding-bottom: max(6px, env(safe-area-inset-bottom));
+    z-index: 100;
+  }
+  .bottom-nav-inner {
+    display: flex; justify-content: space-around; align-items: center;
+  }
+  .bottom-tab {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 6px 12px; border: none; background: none;
+    color: var(--text3); font-size: 10px; cursor: pointer; font-family: inherit;
+  }
+  .bottom-tab .icon { font-size: 20px; }
+  .bottom-tab.active { color: var(--accent2); }
+
+  /* ===== MOBILE RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .header { padding: 12px 16px; }
+    .header h1 { font-size: 16px; }
+    .header .subtitle { display: none; }
+    .logo { width: 36px; height: 36px; font-size: 16px; }
+    .header-left { gap: 10px; }
+    .header-right .btn { padding: 8px 12px; font-size: 12px; }
+    .date-badge { padding: 4px 10px; font-size: 11px; }
+
+    /* Hide top nav, show bottom nav */
+    .nav-tabs { display: none; }
+    .bottom-nav { display: block; }
+
+    .main { padding: 16px; padding-bottom: 80px; }
+
+    /* Summary cards: 2 columns, smaller */
+    .summary-grid { grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .summary-card { padding: 14px; border-radius: 12px; }
+    .summary-card .value { font-size: 20px; }
+    .summary-card .label { font-size: 10px; margin-bottom: 4px; }
+    .summary-card .sub { font-size: 10px; }
+
+    #holdingSummary { grid-template-columns: 1fr !important; }
+    #holdingSummary .summary-card .value { font-size: 16px; }
+
+    /* Charts: 1 column */
+    .chart-grid { grid-template-columns: 1fr; gap: 12px; }
+    .chart-card { padding: 14px; }
+    .chart-wrapper { height: 220px; }
+
+    /* Hide desktop table, show mobile cards */
+    .table-container { display: none; }
+    .mobile-holdings { display: block; }
+
+    /* Analysis cards: single column */
+    .analysis-grid { grid-template-columns: 1fr; gap: 10px; }
+
+    /* Insight box */
+    .insight-box { padding: 14px; }
+    .insight-box h3 { font-size: 14px; }
+    .insight-box p { font-size: 12px; line-height: 1.7; }
+
+    /* Trade items */
+    .trade-item { padding: 14px; }
+    .trade-item-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .trade-detail { font-size: 12px; }
+
+    /* Rules */
+    .rules-card { padding: 16px; }
+    .rules-card h3 { font-size: 14px; }
+    .rule-item { font-size: 12px; padding: 8px 0; }
+
+    /* Modal */
+    .modal { padding: 20px; border-radius: 14px; }
+    .form-row { grid-template-columns: 1fr; }
+
+    /* Toast */
+    .toast { bottom: 80px; right: 16px; left: 16px; text-align: center; }
+  }
+
+  @media (max-width: 400px) {
+    .summary-grid { gap: 8px; }
+    .summary-card { padding: 12px; }
+    .summary-card .value { font-size: 18px; }
+    .main { padding: 12px; padding-bottom: 80px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo">🖤</div>
+    <div>
+      <h1>블랙 가상포트폴리오</h1>
+      <div class="subtitle">Virtual Portfolio Management System</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div>
+      <div class="date-badge" id="currentDate"></div>
+      <div class="update-info" id="updateInfo"></div>
+    </div>
+    <button class="btn btn-primary" onclick="openTradeModal()">+ 매매 기록</button>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <button class="nav-tab active" data-tab="dashboard">📊 대시보드</button>
+  <button class="nav-tab" data-tab="holdings">💼 보유 종목</button>
+  <button class="nav-tab" data-tab="trades">📝 매매 기록</button>
+  <button class="nav-tab" data-tab="journal">🧠 일지</button>
+  <button class="nav-tab" data-tab="analysis">🔍 분석</button>
+  <button class="nav-tab" data-tab="rules">📋 운용 규칙</button>
+  <button class="nav-tab" data-tab="perf">📈 성과 비교</button>
+</div>
+
+<div class="main">
+  <!-- DASHBOARD -->
+  <div class="section active" id="dashboard">
+    <div class="summary-grid" id="summaryGrid"></div>
+    <div class="insight-box" id="insightBox"></div>
+
+    <!-- 벤치마크 비교 섹션 -->
+    <div style="margin-bottom:28px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px;">
+        <h3 style="font-size:15px;font-weight:600;">📈 vs 벤치마크 누적 수익률</h3>
+        <span style="font-size:11px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:6px;">시작일 = 100 기준</span>
+      </div>
+      <div class="summary-grid" id="dashBenchCards" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px;"></div>
+      <div class="chart-card full">
+        <div class="chart-wrapper" style="height:280px;"><canvas id="dashPerfChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h3>📈 종목별 수익률</h3>
+        <div class="chart-wrapper"><canvas id="returnChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>🥧 포트폴리오 비중</h3>
+        <div class="chart-wrapper"><canvas id="weightChart"></canvas></div>
+      </div>
+      <div class="chart-card full">
+        <h3>📊 국내 vs 해외 수익률</h3>
+        <div class="chart-wrapper" style="height:200px"><canvas id="regionChart"></canvas></div>
+      </div>
+    </div>
+    <div class="chart-card full" id="dailyReturnSection" style="display:none; margin-bottom:28px">
+      <h3>📅 일별 수익률 추적</h3>
+      <div class="chart-wrapper"><canvas id="dailyChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- HOLDINGS -->
+  <div class="section" id="holdings">
+    <div class="summary-grid" id="holdingSummary" style="grid-template-columns: repeat(3, 1fr);"></div>
+    <div class="table-container">
+      <div class="table-header"><h3>보유 종목 현황</h3></div>
+      <table>
+        <thead>
+          <tr><th>종목</th><th>시장</th><th>비중</th><th>매수단가</th><th>현재가</th><th>수익률</th><th>평가손익</th><th>상태</th></tr>
+        </thead>
+        <tbody id="holdingsTableBody"></tbody>
+      </table>
+    </div>
+    <!-- Mobile Card View -->
+    <div class="mobile-holdings" id="mobileHoldings"></div>
+    <div class="mobile-holdings" id="mobileSold"></div>
+
+    <div class="table-container" id="soldSection" style="display:none">
+      <div class="table-header"><h3>매도 완료 종목</h3></div>
+      <table>
+        <thead>
+          <tr><th>종목</th><th>시장</th><th>매수단가</th><th>매도단가</th><th>수익률</th><th>실현손익</th></tr>
+        </thead>
+        <tbody id="soldTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TRADES -->
+  <div class="section" id="trades">
+    <h2 style="font-size:18px; margin-bottom:20px;">매매 기록</h2>
+    <div id="tradeHistory"></div>
+  </div>
+
+  <!-- JOURNAL -->
+  <div class="section" id="journal">
+    <div id="journalContent"></div>
+  </div>
+
+  <!-- ANALYSIS -->
+  <div class="section" id="analysis">
+    <h2 style="font-size:18px; margin-bottom:20px;">3대 축 종합 판단</h2>
+    <div class="analysis-grid" id="analysisGrid"></div>
+    <div class="chart-grid" style="margin-top:20px">
+      <div class="chart-card full">
+        <h3>📊 종목별 투자금 배분</h3>
+        <div class="chart-wrapper" style="height:250px"><canvas id="investmentChart"></canvas></div>
+      </div>
+    </div>
+    <div class="insight-box" id="thoughtsBox"></div>
+  </div>
+
+  <!-- PERFORMANCE COMPARISON -->
+  <div class="section" id="perf">
+    <div class="summary-grid" id="perfSummary" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;"></div>
+    <div class="chart-card full" style="margin-bottom:24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+        <h3 style="margin:0;">📈 포트폴리오 vs 벤치마크</h3>
+        <div style="font-size:11px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);padding:6px 12px;border-radius:8px;">
+          시작일(기준=100) 대비 누적 수익률
+        </div>
+      </div>
+      <div class="chart-wrapper" style="height:380px;"><canvas id="perfChart"></canvas></div>
+    </div>
+    <div class="table-container">
+      <div class="table-header">
+        <h3>일별 수익률 비교표</h3>
+        <span style="font-size:12px;color:var(--text3);">누적 수익률 기준 (시작일=0%)</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>날짜</th>
+            <th>🖤 블랙 포트</th>
+            <th>🇰🇷 코스피</th>
+            <th>🇺🇸 S&P500</th>
+            <th>알파 (포트 − S&P)</th>
+          </tr>
+        </thead>
+        <tbody id="perfTableBody"></tbody>
+      </table>
+    </div>
+    <div style="margin-top:16px;padding:14px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;font-size:12px;color:var(--text3);line-height:1.8;">
+      💡 <strong style="color:var(--text2);">코스피/S&P500 데이터 입력 방법:</strong> 매일 MD 노트에 아래 형식으로 추가하면 자동 반영됩니다.<br>
+      <span style="font-family:'JetBrains Mono',monospace;color:var(--accent2);">코스피 누적: -0.82%</span> &nbsp;&nbsp;
+      <span style="font-family:'JetBrains Mono',monospace;color:var(--accent2);">S&P500 누적: +1.15%</span>
+    </div>
+  </div>
+
+  <!-- RULES -->
+  <div class="section" id="rules">
+    <div class="rules-card">
+      <h3>💰 기본 설정</h3>
+      <div class="rule-item"><strong>가상 운용 자산:</strong> 10억원</div>
+      <div class="rule-item"><strong>기준일:</strong> 2026-03-16 (1주차 시작)</div>
+      <div class="rule-item"><strong>포트폴리오:</strong> 총 10개 종목 (국내 5 + 해외 5, ±2개 조정 가능)</div>
+      <div class="rule-item"><strong>비중:</strong> 합계 100%, 확신도에 따라 차등 배분</div>
+    </div>
+    <div class="rules-card">
+      <h3>⚡ 매매 기준</h3>
+      <div class="rule-item"><strong>매수가/매도가:</strong> 직전 거래일 종가 기준</div>
+      <div class="rule-item"><strong>판단 주기:</strong> 하루 단위 (매일 16:30 블랙DB 노트 + KIS API 종가 기반)</div>
+      <div class="rule-item"><strong>거래비용:</strong> 매도 시 1% 차감 (슬리피지 + 세금 + 수수료 통합)</div>
+      <div class="rule-item"><strong>손절:</strong> 종가 기준 -8% 이상 + 차트 하락 신호 시</div>
+    </div>
+    <div class="rules-card">
+      <h3>🐔 투자 철학 (목계 이호걸)</h3>
+      <div class="rule-item"><strong>1. 실패의 원인은 정보력 부족이 아니다</strong> — 욕심, 조급함, 비교가 판단을 흐린다</div>
+      <div class="rule-item"><strong>2. 투자는 긴 레이스</strong> — 평정심이 가장 중요하다</div>
+      <div class="rule-item"><strong>3. 고성장 기업 중심 가치 전략</strong> — 수출 비중 높고, 숫자가 나오는 회사</div>
+      <div class="rule-item"><strong>4. 좋은 과정을 반복하면 결과는 따라온다</strong></div>
+      <div class="rule-item"><strong>5. 매매 전 5가지 자기점검:</strong> 평정심 · 집중 · 기업 질 · 가격 · 과정</div>
+    </div>
+    <div class="rules-card">
+      <h3>📋 CANSLIM 원칙</h3>
+      <div class="rule-item"><strong>C</strong> — 최근 분기 EPS 25% 이상 성장</div>
+      <div class="rule-item"><strong>A</strong> — 연간 EPS 3년 연속 성장</div>
+      <div class="rule-item"><strong>N</strong> — 신제품·신사업·신고가 돌파</div>
+      <div class="rule-item"><strong>S</strong> — 거래량 동반 상승 (수급 확인)</div>
+      <div class="rule-item"><strong>L</strong> — 업종 내 선도주 (상대강도 높은 종목)</div>
+      <div class="rule-item"><strong>I</strong> — 기관 매수 확인 (스마트머니 동행)</div>
+      <div class="rule-item"><strong>M</strong> — 시장 방향 확인 (상승장에서만 공격적 매수)</div>
+    </div>
+    <div class="rules-card">
+      <h3>🔄 크론잡 스케줄</h3>
+      <div class="rule-item"><strong>평일 16:30</strong> — 국내주식 종가 확인 + 내일 매매 결정 (월~금)</div>
+      <div class="rule-item"><strong>평일(화~토) 07:30</strong> — 미국주식 전일 종가 확인 + 당일 매매 결정</div>
+      <div class="rule-item"><strong>토요일 09:00</strong> — 주간 운용 보고 + 다음 주 전략</div>
+    </div>
+  </div>
+</div>
+
+<!-- Trade Modal -->
+<div class="modal-overlay" id="tradeModal">
+  <div class="modal">
+    <h2>📝 매매 기록 추가</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>거래 유형</label>
+        <select id="tradeType">
+          <option value="buy">매수</option>
+          <option value="sell">매도</option>
+          <option value="add">비중 확대</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>거래일</label>
+        <input type="date" id="tradeDate">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>종목명</label>
+        <input type="text" id="tradeTicker" placeholder="예: 삼성전자, NVDA">
+      </div>
+      <div class="form-group">
+        <label>시장</label>
+        <select id="tradeMarket">
+          <option value="KR">국내 (KR)</option>
+          <option value="US">해외 (US)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>단가</label>
+        <input type="number" id="tradePrice" placeholder="매수/매도 단가">
+      </div>
+      <div class="form-group">
+        <label>비중 (%)</label>
+        <input type="number" id="tradeWeight" placeholder="예: 10" min="0" max="100">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>사유</label>
+      <textarea id="tradeReason" rows="3" placeholder="매매 판단 근거를 기록하세요"></textarea>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-secondary" onclick="closeTradeModal()">취소</button>
+      <button class="btn btn-primary" onclick="addTrade()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Nav (Mobile) -->
+<div class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="bottom-tab active" data-tab="dashboard"><span class="icon">📊</span>대시보드</button>
+    <button class="bottom-tab" data-tab="holdings"><span class="icon">💼</span>종목</button>
+    <button class="bottom-tab" data-tab="trades"><span class="icon">📝</span>매매</button>
+    <button class="bottom-tab" data-tab="journal"><span class="icon">🧠</span>일지</button>
+    <button class="bottom-tab" data-tab="rules"><span class="icon">📋</span>규칙</button>
+    <button class="bottom-tab" data-tab="perf"><span class="icon">📈</span>성과</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== LOAD DATA FROM portfolio_data.js =====
+const D = PORTFOLIO_DATA;
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Header
+  document.getElementById('currentDate').textContent =
+    new Date().toLocaleDateString('ko-KR', { year:'numeric', month:'2-digit', day:'2-digit' });
+  document.getElementById('updateInfo').textContent =
+    '업데이트: ' + D.lastUpdated + ' | ' + D.latestNote;
+
+  // Tab navigation
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Bottom tab navigation (mobile)
+  document.querySelectorAll('.bottom-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.bottom-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+      // Sync top tabs
+      document.querySelectorAll(`.nav-tab[data-tab="${tab.dataset.tab}"]`).forEach(t => t.classList.add('active'));
+      window.scrollTo(0, 0);
+    });
+  });
+
+  renderDashboard();
+  renderHoldings();
+  renderMobileHoldings();
+  renderTrades();
+  renderJournal();
+  renderAnalysis();
+  renderPerf();
+  initCharts();
+});
+
+// ===== HELPERS =====
+function fmtPnl(v) {
+  const sign = v >= 0 ? '+' : '';
+  if (Math.abs(v) >= 100000000) return sign + (v / 100000000).toFixed(1) + '억원';
+  return sign + Math.round(v / 10000).toLocaleString('ko-KR') + '만원';
+}
+function pnlClass(v) { return v >= 0 ? 'positive' : 'negative'; }
+function fmtPrice(v, market) {
+  if (market === 'US') return '$' + v.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+  return Math.round(v).toLocaleString('ko-KR') + '원';
+}
+function fmtPct(v) { return (v >= 0 ? '+' : '') + v.toFixed(2) + '%'; }
+
+// ===== DASHBOARD =====
+function renderDashboard() {
+  const s = D.summary;
+  document.getElementById('summaryGrid').innerHTML = `
+    <div class="summary-card">
+      <div class="label">총 운용자산</div>
+      <div class="value">10<span style="font-size:16px">억원</span></div>
+      <div class="sub">가상 운용 자산</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">총 수익률</div>
+      <div class="value ${pnlClass(s.totalReturn)}">${fmtPct(s.totalReturn)}</div>
+      <div class="sub">${fmtPnl(s.totalPnl)}</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">미실현 손익</div>
+      <div class="value ${pnlClass(s.unrealizedPnl)}">${fmtPnl(s.unrealizedPnl)}</div>
+      <div class="sub">보유 종목 평가손익</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">실현 손익</div>
+      <div class="value ${pnlClass(s.realizedPnl)}">${fmtPnl(s.realizedPnl)}</div>
+      <div class="sub">${D.sold.length > 0 ? D.sold.map(s=>s.name).join(', ') : '-'}</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">국내 비중</div>
+      <div class="value">${D.krWeight}<span style="font-size:16px">%</span></div>
+      <div class="sub">${D.krCount}종목 보유${D.krReturn !== null ? ' | ' + fmtPct(D.krReturn) : ''}</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">해외 비중</div>
+      <div class="value">${D.usWeight}<span style="font-size:16px">%</span></div>
+      <div class="sub">${D.usCount}종목 보유${D.usReturn !== null ? ' | ' + fmtPct(D.usReturn) : ''}</div>
+    </div>
+  `;
+
+  // Insight
+  const thought = D.thoughts && D.thoughts.length > 0 ? D.thoughts[0] : '';
+  // Clean up markdown formatting for display
+  const cleanThought = thought.replace(/^-\s*/gm, '').replace(/\n/g, '<br>').substring(0, 600);
+  document.getElementById('insightBox').innerHTML = `
+    <h3>🧠 블랙의 최신 판단</h3>
+    <p>${cleanThought || '아직 판단 기록이 없습니다.'}</p>
+  `;
+
+  // 벤치마크 비교 카드
+  renderDashBench();
+}
+
+// ===== HOLDINGS =====
+function renderHoldings() {
+  // Summary
+  const best = D.best;
+  const worst = D.worst;
+  document.getElementById('holdingSummary').innerHTML = `
+    <div class="summary-card">
+      <div class="label">보유 종목수</div>
+      <div class="value">${D.holdings.length}</div>
+      <div class="sub">국내 ${D.krCount} / 해외 ${D.usCount}</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">최고 수익 종목</div>
+      <div class="value positive" style="font-size:18px">${best ? best.name + ' ' + fmtPct(best.returnPct) : '-'}</div>
+      <div class="sub">${best ? fmtPnl(best.pnl) : ''}</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">최저 수익 종목</div>
+      <div class="value negative" style="font-size:18px">${worst ? worst.name + ' ' + fmtPct(worst.returnPct) : '-'}</div>
+      <div class="sub">${worst ? fmtPnl(worst.pnl) : ''}</div>
+    </div>
+  `;
+
+  // Holdings table
+  document.getElementById('holdingsTableBody').innerHTML = D.holdings.map(h => `
+    <tr>
+      <td>
+        <div class="ticker-cell">
+          <span class="market-badge ${h.market.toLowerCase()}">${h.market}</span>
+          <div>
+            <div class="ticker-name">${h.name}</div>
+            <div class="ticker-code">${h.code}</div>
+          </div>
+        </div>
+      </td>
+      <td>${h.market === 'KR' ? '🇰🇷' : '🇺🇸'}</td>
+      <td>
+        <div class="weight-bar-container">
+          <span>${h.weight}%</span>
+          <div class="weight-bar"><div class="weight-bar-fill" style="width:${h.weight * 5}%"></div></div>
+        </div>
+      </td>
+      <td class="pnl-cell">${fmtPrice(h.buyPrice, h.market)}</td>
+      <td class="pnl-cell">${fmtPrice(h.currentPrice, h.market)}</td>
+      <td><span class="pnl-badge ${pnlClass(h.returnPct)}">${fmtPct(h.returnPct)}</span></td>
+      <td class="pnl-cell ${pnlClass(h.pnl)}">${fmtPnl(h.pnl)}</td>
+      <td><span class="status-dot hold"></span>보유</td>
+    </tr>
+  `).join('');
+
+  // Sold table
+  if (D.sold.length > 0) {
+    document.getElementById('soldSection').style.display = 'block';
+    document.getElementById('soldTableBody').innerHTML = D.sold.map(s => `
+      <tr>
+        <td>
+          <div class="ticker-cell">
+            <span class="market-badge ${s.market.toLowerCase()}">${s.market}</span>
+            <div>
+              <div class="ticker-name">${s.name}</div>
+              <div class="ticker-code">${s.code}</div>
+            </div>
+          </div>
+        </td>
+        <td>${s.market === 'KR' ? '🇰🇷' : '🇺🇸'}</td>
+        <td class="pnl-cell">${fmtPrice(s.buyPrice, s.market)}</td>
+        <td class="pnl-cell">${fmtPrice(s.sellPrice || s.currentPrice, s.market)}</td>
+        <td><span class="pnl-badge negative">${fmtPct(s.returnPct)}</span></td>
+        <td class="pnl-cell negative">${fmtPnl(s.pnl || s.investAmt * s.returnPct / 100)}</td>
+      </tr>
+    `).join('');
+  }
+}
+
+// ===== MOBILE HOLDINGS =====
+function renderMobileHoldings() {
+  document.getElementById('mobileHoldings').innerHTML =
+    '<h3 style="font-size:16px;font-weight:600;margin-bottom:12px;">보유 종목</h3>' +
+    D.holdings.map(h => `
+      <div class="mobile-card">
+        <div class="mobile-card-top">
+          <div class="mobile-card-name">
+            <span class="market-badge ${h.market.toLowerCase()}">${h.market}</span>
+            <span class="ticker-name">${h.name}</span>
+            <span class="ticker-code">${h.code}</span>
+          </div>
+          <span class="pnl-badge ${pnlClass(h.returnPct)}">${fmtPct(h.returnPct)}</span>
+        </div>
+        <div class="mobile-card-row"><span>비중</span><span class="val">${h.weight}%</span></div>
+        <div class="mobile-card-row"><span>매수단가</span><span class="val">${fmtPrice(h.buyPrice, h.market)}</span></div>
+        <div class="mobile-card-row"><span>현재가</span><span class="val">${fmtPrice(h.currentPrice, h.market)}</span></div>
+        <div class="mobile-card-divider"></div>
+        <div class="mobile-card-row"><span>평가손익</span><span class="val ${pnlClass(h.pnl)}">${fmtPnl(h.pnl)}</span></div>
+      </div>
+    `).join('');
+
+  // Sold
+  if (D.sold.length > 0) {
+    document.getElementById('mobileSold').innerHTML =
+      '<h3 style="font-size:16px;font-weight:600;margin:20px 0 12px;">매도 완료</h3>' +
+      D.sold.map(s => `
+        <div class="mobile-card" style="border-color:rgba(239,68,68,0.3)">
+          <div class="mobile-card-top">
+            <div class="mobile-card-name">
+              <span class="market-badge ${s.market.toLowerCase()}">${s.market}</span>
+              <span class="ticker-name">${s.name}</span>
+            </div>
+            <span class="pnl-badge negative">${fmtPct(s.returnPct)}</span>
+          </div>
+          <div class="mobile-card-row"><span>매수단가</span><span class="val">${fmtPrice(s.buyPrice, s.market)}</span></div>
+          <div class="mobile-card-row"><span>매도단가</span><span class="val">${fmtPrice(s.sellPrice || s.currentPrice, s.market)}</span></div>
+          <div class="mobile-card-row"><span>상태</span><span class="val negative"><span class="status-dot sold"></span>매도</span></div>
+        </div>
+      `).join('');
+  }
+}
+
+// ===== TRADES =====
+function renderTrades() {
+  const container = document.getElementById('tradeHistory');
+  const typeMap = { buy: ['매수','buy'], sell: ['매도','sell'], add: ['비중확대','add'] };
+  container.innerHTML = D.trades.map(t => {
+    const [label, cls] = typeMap[t.type] || ['기타','buy'];
+    return `
+      <div class="trade-item">
+        <div class="trade-item-header">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="trade-type ${cls}">${label}</span>
+            <strong>${t.ticker}</strong>
+          </div>
+          <span class="trade-date">${t.date}</span>
+        </div>
+        <div class="trade-detail">${t.reason}</div>
+      </div>
+    `;
+  }).join('') || '<p style="color:var(--text3)">매매 기록이 없습니다.</p>';
+}
+
+// ===== ANALYSIS =====
+function renderAnalysis() {
+  const grid = document.getElementById('analysisGrid');
+  grid.innerHTML = D.analysis.map(a => `
+    <div class="analysis-card">
+      <h4>${a.name}</h4>
+      <div class="signal-row"><span>펀더멘털</span><span class="signal-icon">${a.fundamental}</span></div>
+      <div class="signal-row"><span>차트</span><span class="signal-icon">${a.chart}</span></div>
+      <div class="signal-row"><span>마켓심리</span><span class="signal-icon">${a.sentiment}</span></div>
+      <div class="signal-row" style="font-weight:600"><span>종합</span><span class="signal-icon">${a.total}</span></div>
+      ${a.note ? `<div style="margin-top:8px;font-size:12px;color:var(--text3)">${a.note}</div>` : ''}
+    </div>
+  `).join('');
+
+  // Thoughts
+  const box = document.getElementById('thoughtsBox');
+  if (D.thoughts && D.thoughts.length > 1) {
+    const review = D.thoughts[1] || '';
+    box.innerHTML = `<h3>📝 복기</h3><p>${review.replace(/\n/g,'<br>').substring(0,800)}</p>`;
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+// ===== JOURNAL =====
+function renderJournal() {
+  const el = document.getElementById('journalContent');
+  // 마크다운 간이 포맷: **bold** → <strong>, - bullet → styled
+  function fmt(text) {
+    if (!text) return '<span style="color:var(--text3)">아직 기록이 없습니다.</span>';
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/^- /gm, '• ')
+      .replace(/\n/g, '<br>');
+  }
+
+  let html = '';
+
+  // 국내 매매 결정
+  if (D.tradeDecisions && D.tradeDecisions.kr) {
+    html += `<div class="journal-block">
+      <h3>🇰🇷 국내 매매 결정</h3>
+      <div class="journal-text">${fmt(D.tradeDecisions.kr)}</div>
+    </div>`;
+  }
+
+  // 미국 매매 결정
+  if (D.tradeDecisions && D.tradeDecisions.us) {
+    html += `<div class="journal-block">
+      <h3>🇺🇸 미국 매매 결정</h3>
+      <div class="journal-text">${fmt(D.tradeDecisions.us)}</div>
+    </div>`;
+  }
+
+  // 복기
+  if (D.review) {
+    html += `<div class="journal-block">
+      <h3>📝 복기</h3>
+      <div class="journal-text">${fmt(D.review)}</div>
+    </div>`;
+  }
+
+  // 판단 우선순위
+  if (D.priority) {
+    html += `<div class="journal-block">
+      <h3>📡 판단 우선순위</h3>
+      <div class="journal-text">${fmt(D.priority)}</div>
+    </div>`;
+  }
+
+  // 블랙의 생각 변화
+  if (D.thoughts) {
+    html += `<div class="journal-block journal-highlight">
+      <h3>🧠 블랙의 생각 변화</h3>
+      <div class="journal-text">${fmt(D.thoughts)}</div>
+    </div>`;
+  }
+
+  if (!html) {
+    html = '<p style="color:var(--text3);text-align:center;padding:40px">아직 일지가 없습니다.</p>';
+  }
+
+  el.innerHTML = html;
+}
+
+// ===== CHARTS =====
+function initCharts() {
+  Chart.defaults.color = '#a0a0b8';
+  Chart.defaults.borderColor = '#2a2a3a';
+
+  const h = D.holdings;
+
+  // Return chart
+  new Chart(document.getElementById('returnChart'), {
+    type: 'bar',
+    data: {
+      labels: h.map(x => x.name),
+      datasets: [{
+        data: h.map(x => x.returnPct),
+        backgroundColor: h.map(x => x.returnPct >= 0 ? 'rgba(34,197,94,0.6)' : 'rgba(239,68,68,0.6)'),
+        borderColor: h.map(x => x.returnPct >= 0 ? '#22c55e' : '#ef4444'),
+        borderWidth: 1, borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { grid: { color: 'rgba(42,42,58,0.5)' }, ticks: { callback: v => v + '%' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // Weight doughnut
+  const colors = ['#7c5cfc','#4f46e5','#3b82f6','#22c55e','#f59e0b','#ef4444','#ec4899','#8b5cf6','#06b6d4','#f97316'];
+  new Chart(document.getElementById('weightChart'), {
+    type: 'doughnut',
+    data: {
+      labels: h.map(x => x.name),
+      datasets: [{
+        data: h.map(x => x.weight),
+        backgroundColor: colors.slice(0, h.length),
+        borderColor: '#12121a', borderWidth: 2,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '65%',
+      plugins: { legend: { position: 'right', labels: { padding: 12, usePointStyle: true, pointStyle: 'circle', font: { size: 11 } } } }
+    }
+  });
+
+  // Region chart
+  new Chart(document.getElementById('regionChart'), {
+    type: 'bar',
+    data: {
+      labels: [`국내 (${D.krWeight}%)`, `해외 (${D.usWeight}%)`],
+      datasets: [{
+        label: '수익률',
+        data: [D.krReturn || 0, D.usReturn || 0],
+        backgroundColor: ['rgba(205,49,58,0.5)','rgba(60,59,110,0.5)'],
+        borderColor: ['#cd313a','#3c3b6e'],
+        borderWidth: 1, borderRadius: 6,
+      }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(42,42,58,0.5)' }, ticks: { callback: v => v + '%' } },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+
+  // Investment chart
+  new Chart(document.getElementById('investmentChart'), {
+    type: 'bar',
+    data: {
+      labels: h.map(x => x.name),
+      datasets: [{
+        label: '투자금 (억원)',
+        data: h.map(x => x.investAmt / 100000000),
+        backgroundColor: h.map(x => x.market === 'KR' ? 'rgba(205,49,58,0.5)' : 'rgba(60,59,110,0.5)'),
+        borderColor: h.map(x => x.market === 'KR' ? '#cd313a' : '#3c3b6e'),
+        borderWidth: 1, borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { grid: { color: 'rgba(42,42,58,0.5)' }, ticks: { callback: v => v + '억' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // Dashboard benchmark comparison chart
+  {
+    const dr = D.dailyReturns || [];
+    const inception = D.inceptionDate || '2026-03-13';
+    const dates = [inception + ' (시작)', ...dr.map(d => d.date)];
+    const toIdx = (pct) => pct != null ? parseFloat((100 * (1 + pct / 100)).toFixed(3)) : null;
+    const portD  = [100, ...dr.map(d => toIdx(d.total))];
+    const kospiD = [100, ...dr.map(d => d.kospi != null ? toIdx(d.kospi) : null)];
+    const sp500D = [100, ...dr.map(d => d.sp500 != null ? toIdx(d.sp500) : null)];
+
+    new Chart(document.getElementById('dashPerfChart'), {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [
+          {
+            label: '🖤 블랙 포트',
+            data: portD,
+            borderColor: '#7c5cfc',
+            backgroundColor: 'rgba(124,92,252,0.12)',
+            borderWidth: 2.5, tension: 0.35, fill: true,
+            pointRadius: portD.length <= 15 ? 5 : 3,
+            pointBackgroundColor: '#7c5cfc',
+            pointBorderColor: '#0a0a0f', pointBorderWidth: 2,
+          },
+          {
+            label: '🇰🇷 코스피',
+            data: kospiD,
+            borderColor: '#ef4444', borderWidth: 2, tension: 0.35, fill: false,
+            pointRadius: kospiD.length <= 15 ? 4 : 2,
+            pointBackgroundColor: '#ef4444',
+            pointBorderColor: '#0a0a0f', pointBorderWidth: 2, spanGaps: true,
+          },
+          {
+            label: '🇺🇸 S&P500',
+            data: sp500D,
+            borderColor: '#3b82f6', borderWidth: 2, tension: 0.35, fill: false,
+            pointRadius: sp500D.length <= 15 ? 4 : 2,
+            pointBackgroundColor: '#3b82f6',
+            pointBorderColor: '#0a0a0f', pointBorderWidth: 2, spanGaps: true,
+          }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { intersect: false, mode: 'index' },
+        plugins: {
+          legend: { labels: { usePointStyle: true, pointStyle: 'circle', padding: 16, font: { size: 12 } } },
+          tooltip: {
+            backgroundColor: 'rgba(18,18,26,0.96)',
+            borderColor: '#2a2a3a', borderWidth: 1,
+            callbacks: {
+              label: ctx => {
+                const v = ctx.parsed.y;
+                if (v == null) return ` ${ctx.dataset.label}: 데이터 없음`;
+                return ` ${ctx.dataset.label}: ${v.toFixed(2)}  (${fmtPct(v - 100)})`;
+              }
+            }
+          }
+        },
+        scales: {
+          y: { grid: { color: 'rgba(42,42,58,0.5)' }, ticks: { callback: v => v.toFixed(0), font: { family: "'JetBrains Mono',monospace", size: 11 } } },
+          x: { grid: { display: false }, ticks: { font: { size: 11 }, maxRotation: 30 } }
+        }
+      }
+    });
+  }
+
+  // Daily returns (if more than 1 day)
+  if (D.dailyReturns && D.dailyReturns.length > 1) {
+    document.getElementById('dailyReturnSection').style.display = 'block';
+    new Chart(document.getElementById('dailyChart'), {
+      type: 'line',
+      data: {
+        labels: D.dailyReturns.map(d => d.date),
+        datasets: [
+          { label: '전체', data: D.dailyReturns.map(d => d.total), borderColor: '#7c5cfc', borderWidth: 2, tension: 0.3, fill: false },
+          { label: '국내', data: D.dailyReturns.map(d => d.kr), borderColor: '#cd313a', borderWidth: 2, tension: 0.3, fill: false },
+          { label: '해외', data: D.dailyReturns.map(d => d.us), borderColor: '#3c3b6e', borderWidth: 2, tension: 0.3, fill: false },
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { labels: { usePointStyle: true, pointStyle: 'circle' } } },
+        scales: {
+          y: { grid: { color: 'rgba(42,42,58,0.5)' }, ticks: { callback: v => v + '%' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  }
+}
+
+// ===== DASHBOARD BENCHMARK SECTION =====
+function renderDashBench() {
+  const dr = D.dailyReturns || [];
+  const inception = D.inceptionDate || '2026-03-13';
+  const toIdx = (pct) => pct != null ? parseFloat((100 * (1 + pct / 100)).toFixed(3)) : null;
+
+  const portIdx  = [100, ...dr.map(d => toIdx(d.total))];
+  const kospiIdx = [100, ...dr.map(d => d.kospi != null ? toIdx(d.kospi) : null)];
+  const sp500Idx = [100, ...dr.map(d => d.sp500 != null ? toIdx(d.sp500) : null)];
+
+  const lastPort  = portIdx[portIdx.length - 1] || 100;
+  const lastKospi = [...kospiIdx].reverse().find(v => v != null) || null;
+  const lastSP500 = [...sp500Idx].reverse().find(v => v != null) || null;
+
+  const dash = `<span style="font-size:18px;color:var(--text3);">—</span>`;
+
+  document.getElementById('dashBenchCards').innerHTML = `
+    <div class="summary-card" style="border-color:rgba(124,92,252,0.4);">
+      <div class="label">🖤 블랙 포트 (누적)</div>
+      <div class="value ${(lastPort-100)>=0?'positive':'negative'}">${fmtPct(lastPort-100)}</div>
+      <div class="sub">시작일(${inception}) 대비</div>
+    </div>
+    <div class="summary-card" style="border-color:rgba(239,68,68,0.3);">
+      <div class="label">🇰🇷 코스피 (누적)</div>
+      <div class="value ${lastKospi!=null?((lastKospi-100)>=0?'positive':'negative'):''}">${lastKospi!=null?fmtPct(lastKospi-100):dash}</div>
+      <div class="sub">${lastKospi!=null?'시작일 대비':'MD 노트에 코스피 누적: xx% 입력'}</div>
+    </div>
+    <div class="summary-card" style="border-color:rgba(59,130,246,0.3);">
+      <div class="label">🇺🇸 S&P500 (누적)</div>
+      <div class="value ${lastSP500!=null?((lastSP500-100)>=0?'positive':'negative'):''}">${lastSP500!=null?fmtPct(lastSP500-100):dash}</div>
+      <div class="sub">${lastSP500!=null?'시작일 대비':'MD 노트에 S&P500 누적: xx% 입력'}</div>
+    </div>
+  `;
+}
+
+// ===== PERFORMANCE COMPARISON =====
+function renderPerf() {
+  const dr = D.dailyReturns || [];
+  const inception = D.inceptionDate || '2026-03-13';
+
+  // 시작점 포함한 날짜 배열
+  const dates = [inception + ' (시작)', ...dr.map(d => d.date)];
+
+  // 누적 수익률 → 인덱스값 (100 = 시작)
+  const toIdx = (pct) => pct != null ? parseFloat((100 * (1 + pct / 100)).toFixed(3)) : null;
+
+  const portIdx  = [100, ...dr.map(d => toIdx(d.total))];
+  const kospiIdx = [100, ...dr.map(d => d.kospi != null ? toIdx(d.kospi) : null)];
+  const sp500Idx = [100, ...dr.map(d => d.sp500 != null ? toIdx(d.sp500) : null)];
+
+  const lastPort  = portIdx[portIdx.length - 1] || 100;
+  const lastKospi = [...kospiIdx].reverse().find(v => v != null) || null;
+  const lastSP500 = [...sp500Idx].reverse().find(v => v != null) || null;
+
+  // 요약 카드
+  const noData = '<span style="font-size:13px;color:var(--text3);">데이터 없음</span>';
+  document.getElementById('perfSummary').innerHTML = `
+    <div class="summary-card" style="border-color:rgba(124,92,252,0.4);">
+      <div class="label">🖤 블랙 포트 (누적)</div>
+      <div class="value ${(lastPort-100)>=0?'positive':'negative'}">${fmtPct(lastPort-100)}</div>
+      <div class="sub">시작일(${inception}) 대비</div>
+    </div>
+    <div class="summary-card" style="border-color:rgba(205,49,58,0.3);">
+      <div class="label">🇰🇷 코스피 (누적)</div>
+      <div class="value ${lastKospi!=null ? ((lastKospi-100)>=0?'positive':'negative') : ''}">${lastKospi!=null ? fmtPct(lastKospi-100) : noData}</div>
+      <div class="sub">${lastKospi!=null ? '시작일 대비' : 'MD 노트에 코스피 누적: xx% 추가'}</div>
+    </div>
+    <div class="summary-card" style="border-color:rgba(59,130,246,0.3);">
+      <div class="label">🇺🇸 S&P500 (누적)</div>
+      <div class="value ${lastSP500!=null ? ((lastSP500-100)>=0?'positive':'negative') : ''}">${lastSP500!=null ? fmtPct(lastSP500-100) : noData}</div>
+      <div class="sub">${lastSP500!=null ? '시작일 대비' : 'MD 노트에 S&P500 누적: xx% 추가'}</div>
+    </div>
+  `;
+
+  // 테이블
+  document.getElementById('perfTableBody').innerHTML = dr.length === 0
+    ? `<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:36px;">데이터가 쌓이면 표시됩니다.</td></tr>`
+    : dr.map((d, i) => {
+        const pct   = d.total  != null ? d.total  : null;
+        const kpct  = d.kospi  != null ? d.kospi  : null;
+        const spct  = d.sp500  != null ? d.sp500  : null;
+        const alpha = (pct != null && spct != null) ? pct - spct : null;
+        const badge = (v, cls) => `<span class="pnl-badge ${cls}">${fmtPct(v)}</span>`;
+        const dash  = `<span style="color:var(--text3);font-size:12px">—</span>`;
+        return `
+          <tr>
+            <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">${d.date}</td>
+            <td>${pct  != null ? badge(pct,  pct>=0?'positive':'negative')   : dash}</td>
+            <td>${kpct != null ? badge(kpct, kpct>=0?'positive':'negative')  : dash}</td>
+            <td>${spct != null ? badge(spct, spct>=0?'positive':'negative')  : dash}</td>
+            <td>${alpha!= null ? badge(alpha,alpha>=0?'positive':'negative') : dash}</td>
+          </tr>`;
+      }).join('');
+
+  // 차트
+  const kospiHasData = kospiIdx.some(v => v != null && v !== 100);
+  const sp500HasData = sp500Idx.some(v => v != null && v !== 100);
+
+  new Chart(document.getElementById('perfChart'), {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [
+        {
+          label: '🖤 블랙 포트',
+          data: portIdx,
+          borderColor: '#7c5cfc',
+          backgroundColor: 'rgba(124,92,252,0.12)',
+          borderWidth: 2.5,
+          tension: 0.35,
+          fill: true,
+          pointRadius: portIdx.length <= 15 ? 5 : 3,
+          pointBackgroundColor: '#7c5cfc',
+          pointBorderColor: '#0a0a0f',
+          pointBorderWidth: 2,
+        },
+        {
+          label: '🇰🇷 코스피',
+          data: kospiIdx,
+          borderColor: '#ef4444',
+          backgroundColor: 'transparent',
+          borderWidth: 2,
+          tension: 0.35,
+          fill: false,
+          borderDash: kospiHasData ? [] : [6, 4],
+          pointRadius: kospiIdx.length <= 15 ? 4 : 2,
+          pointBackgroundColor: '#ef4444',
+          pointBorderColor: '#0a0a0f',
+          pointBorderWidth: 2,
+          spanGaps: true,
+        },
+        {
+          label: '🇺🇸 S&P500',
+          data: sp500Idx,
+          borderColor: '#3b82f6',
+          backgroundColor: 'transparent',
+          borderWidth: 2,
+          tension: 0.35,
+          fill: false,
+          borderDash: sp500HasData ? [] : [6, 4],
+          pointRadius: sp500Idx.length <= 15 ? 4 : 2,
+          pointBackgroundColor: '#3b82f6',
+          pointBorderColor: '#0a0a0f',
+          pointBorderWidth: 2,
+          spanGaps: true,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: {
+        legend: {
+          labels: {
+            usePointStyle: true, pointStyle: 'circle',
+            padding: 20, font: { size: 13 }
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(18,18,26,0.96)',
+          borderColor: '#2a2a3a',
+          borderWidth: 1,
+          titleFont: { family: "'JetBrains Mono', monospace", size: 12 },
+          bodyFont: { size: 13 },
+          padding: 12,
+          callbacks: {
+            label: ctx => {
+              const v = ctx.parsed.y;
+              if (v == null) return ` ${ctx.dataset.label}: 데이터 없음`;
+              const diff = v - 100;
+              return ` ${ctx.dataset.label}: ${v.toFixed(2)}  (${diff >= 0 ? '+' : ''}${diff.toFixed(2)}%)`;
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          grid: { color: 'rgba(42,42,58,0.5)' },
+          ticks: {
+            callback: v => v.toFixed(0),
+            font: { family: "'JetBrains Mono', monospace", size: 11 }
+          }
+        },
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 11 }, maxRotation: 30 }
+        }
+      }
+    }
+  });
+}
+
+// ===== TRADE MODAL =====
+function openTradeModal() {
+  document.getElementById('tradeModal').classList.add('active');
+  document.getElementById('tradeDate').value = new Date().toISOString().split('T')[0];
+}
+function closeTradeModal() {
+  document.getElementById('tradeModal').classList.remove('active');
+}
+function addTrade() {
+  const t = {
+    date: document.getElementById('tradeDate').value,
+    type: document.getElementById('tradeType').value,
+    ticker: document.getElementById('tradeTicker').value,
+    reason: document.getElementById('tradeReason').value || '-',
+  };
+  if (!t.ticker) { showToast('종목명을 입력해주세요'); return; }
+  D.trades.unshift(t);
+  renderTrades();
+  closeTradeModal();
+  const labels = { buy: '매수', sell: '매도', add: '비중확대' };
+  showToast(`${t.ticker} ${labels[t.type]} 기록 완료`);
+  ['tradeTicker','tradePrice','tradeWeight','tradeReason'].forEach(id => document.getElementById(id).value = '');
+}
+document.getElementById('tradeModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeTradeModal();
+});
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// === PWA 설치 ===
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  showInstallBanner();
+});
+
+function showInstallBanner() {
+  if (document.getElementById('installBanner')) return;
+  const banner = document.createElement('div');
+  banner.id = 'installBanner';
+  banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:10000;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,0.5);font-size:14px;';
+  banner.innerHTML = `
+    <div style="flex:1">
+      <div style="font-weight:700;margin-bottom:2px">📱 앱으로 설치하기</div>
+      <div style="font-size:12px;opacity:0.8">홈 화면에 추가하면 앱처럼 사용 가능!</div>
+    </div>
+    <button onclick="installPWA()" style="background:#4ade80;color:#000;border:none;padding:8px 16px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;margin-left:8px;white-space:nowrap">설치</button>
+    <button onclick="this.parentElement.remove()" style="background:none;border:none;color:#888;font-size:20px;cursor:pointer;margin-left:4px;padding:4px 8px">&times;</button>
+  `;
+  document.body.prepend(banner);
+}
+
+function installPWA() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(result => {
+    if (result.outcome === 'accepted') showToast('앱 설치 완료!');
+    deferredPrompt = null;
+    const b = document.getElementById('installBanner');
+    if (b) b.remove();
+  });
+}
+
+// Service Worker 등록
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
