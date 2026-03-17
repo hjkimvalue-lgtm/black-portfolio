@@ -592,8 +592,12 @@ const PORTFOLIO_DATA = {
   }
   .bottom-nav-inner {
     display: flex; justify-content: space-around; align-items: center;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; -ms-overflow-style: none;
   }
+  .bottom-nav-inner::-webkit-scrollbar { display: none; }
   .bottom-tab {
+    flex-shrink: 0;
     display: flex; flex-direction: column; align-items: center; gap: 2px;
     padding: 6px 12px; border: none; background: none;
     color: var(--text3); font-size: 10px; cursor: pointer; font-family: inherit;
@@ -732,7 +736,6 @@ const PORTFOLIO_DATA = {
       <div class="date-badge" id="currentDate"></div>
       <div class="update-info" id="updateInfo"></div>
     </div>
-    <button class="btn btn-primary" onclick="openTradeModal()">+ 매매 기록</button>
   </div>
 </div>
 
@@ -863,15 +866,15 @@ const PORTFOLIO_DATA = {
     <div class="table-container" style="margin-bottom:24px;">
       <div class="table-header">
         <h3>📈 포트폴리오 리더보드</h3>
-        <span style="font-size:12px;color:var(--text3);">누적 수익률 기준</span>
+        <span style="font-size:12px;color:var(--text3);">올해 수익률 기준</span>
       </div>
       <table>
         <thead>
           <tr>
             <th>순위</th>
             <th>닉네임</th>
-            <th>누적 수익률</th>
-            <th>한마디</th>
+            <th>올해 수익률</th>
+            <th>보유종목&비중</th>
             <th>업데이트</th>
           </tr>
         </thead>
@@ -890,13 +893,13 @@ const PORTFOLIO_DATA = {
           <input id="portNick" type="text" placeholder="예: 투자왕" maxlength="10">
         </div>
         <div class="form-group">
-          <label>누적 수익률 (%)</label>
+          <label>올해 수익률 (%)</label>
           <input id="portReturn" type="number" step="0.01" placeholder="예: 5.23">
         </div>
       </div>
       <div class="form-group">
-        <label>한마디 (최대 50자)</label>
-        <input id="portComment" type="text" placeholder="예: 오늘도 수익! 🔥" maxlength="50">
+        <label>보유종목 &amp; 비중 (최대 80자)</label>
+        <input id="portComment" type="text" placeholder="예: 삼성전자 40%, TSMC 30%, 현금 30%" maxlength="80">
       </div>
       <button class="btn btn-primary" onclick="submitPortfolio()">등록 / 업데이트</button>
     </div>
@@ -1065,7 +1068,6 @@ const PORTFOLIO_DATA = {
     <button class="bottom-tab" data-tab="trades"><span class="icon">📝</span>매매</button>
     <button class="bottom-tab" data-tab="journal"><span class="icon">🧠</span>일지</button>
     <button class="bottom-tab" data-tab="rules"><span class="icon">📋</span>규칙</button>
-    <button class="bottom-tab" data-tab="perf"><span class="icon">📈</span>성과</button>
     <button class="bottom-tab" data-tab="community"><span class="icon">🏘️</span>커뮤니티</button>
   </div>
 </div>
@@ -1867,7 +1869,7 @@ function loadLeaderboard() {
           <td><span class="rank-badge ${rankClass}">${rankLabel}</span></td>
           <td><strong>${escapeHtml(p.nickname)}</strong></td>
           <td><span class="pnl-badge ${p.totalReturn >= 0 ? 'positive' : 'negative'}">${fmtPct(p.totalReturn)}</span></td>
-          <td style="font-size:13px;color:var(--text2);">${escapeHtml(p.comment)}</td>
+          <td style="font-size:12px;color:var(--text2);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escapeHtml(p.comment)}">${escapeHtml(p.comment)}</td>
           <td style="font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace">${timeStr}</td>
         </tr>`;
     }).join('') || '<tr><td colspan="5" style="text-align:center;padding:28px;color:var(--text3);">첫 번째로 등록해보세요!</td></tr>';
