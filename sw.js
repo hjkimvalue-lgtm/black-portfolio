@@ -1,8 +1,8 @@
 // 블랙 가상포트폴리오 Service Worker
 const CACHE_NAME = 'black-portfolio-v1';
 const urlsToCache = [
-  '/portfolio_app.html',
-  '/manifest.json'
+  '/black-portfolio/portfolio_app.html',
+  '/black-portfolio/manifest.json'
 ];
 
 // 설치 시 캐시
