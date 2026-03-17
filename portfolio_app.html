@@ -746,7 +746,8 @@ const PORTFOLIO_DATA = {
   <button class="nav-tab" data-tab="journal">🧠 일지</button>
   <button class="nav-tab" data-tab="analysis">🔍 분석</button>
   <button class="nav-tab" data-tab="rules">📋 운용 규칙</button>
-  <button class="nav-tab" data-tab="community">🏘️ 커뮤니티</button>
+  <button class="nav-tab" data-tab="ranking">🏆 랭킹</button>
+  <button class="nav-tab" data-tab="community">💬 게시판</button>
 </div>
 
 <div class="main">
@@ -838,37 +839,35 @@ const PORTFOLIO_DATA = {
     <div class="insight-box" id="thoughtsBox"></div>
   </div>
 
-  <!-- COMMUNITY -->
-  <div class="section" id="community">
+  <!-- RANKING -->
+  <div class="section" id="ranking">
 
-    <!-- 기본 화면 -->
-    <div id="commMain">
-
-      <!-- 방문자 통계 -->
-      <div class="comm-stats">
-        <div class="stat-card">
-          <div class="stat-num" id="statToday">—</div>
-          <div class="stat-label">오늘 접속</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num" id="statTotal">—</div>
-          <div class="stat-label">누적 방문</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num" id="statMembers">—</div>
-          <div class="stat-label">포트 참여자</div>
-        </div>
+    <!-- 방문자 통계 -->
+    <div class="comm-stats">
+      <div class="stat-card">
+        <div class="stat-num" id="statToday">—</div>
+        <div class="stat-label">오늘 접속</div>
       </div>
-
-      <div class="firebase-notice" id="firebaseNotice" style="display:none;">
-        ⚙️ <strong>Firebase 설정 필요</strong> — portfolio_app.html 내 <code>FIREBASE_CONFIG</code>를 채워주세요.
+      <div class="stat-card">
+        <div class="stat-num" id="statTotal">—</div>
+        <div class="stat-label">누적 방문</div>
       </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statMembers">—</div>
+        <div class="stat-label">포트 참여자</div>
+      </div>
+    </div>
 
-      <!-- 포트폴리오 리더보드 -->
+    <div class="firebase-notice" id="firebaseNotice" style="display:none;">
+      ⚙️ <strong>Firebase 설정 필요</strong>
+    </div>
+
+    <!-- 기본 화면: 리더보드 -->
+    <div id="rankMain">
       <div class="table-container" style="margin-bottom:24px;">
         <div class="table-header">
-          <h3>📈 포트폴리오 리더보드</h3>
-          <button class="btn btn-primary" style="font-size:12px;padding:6px 14px;" onclick="showCommView('portForm')">✏️ 내 포트 등록/업데이트</button>
+          <h3>🏆 포트폴리오 랭킹</h3>
+          <button class="btn btn-primary" style="font-size:12px;padding:6px 14px;" onclick="showRankView('portForm')">✏️ 내 포트 등록/업데이트</button>
         </div>
         <table>
           <thead>
@@ -885,22 +884,12 @@ const PORTFOLIO_DATA = {
           </tbody>
         </table>
       </div>
-
-      <!-- 자유게시판 목록 -->
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-        <h3 style="font-size:16px;font-weight:600;">💬 자유게시판</h3>
-        <button class="btn btn-primary" style="font-size:12px;padding:6px 14px;" onclick="showCommView('postForm')">✍️ 글 올리기</button>
-      </div>
-      <div id="postsList">
-        <p style="text-align:center;color:var(--text3);padding:28px;">로딩 중...</p>
-      </div>
-
     </div>
 
     <!-- 포트 등록 화면 -->
-    <div id="commPortForm" style="display:none;">
+    <div id="rankPortForm" style="display:none;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
-        <button class="btn" style="font-size:13px;padding:6px 14px;" onclick="showCommView('main')">← 뒤로</button>
+        <button class="btn" style="font-size:13px;padding:6px 14px;" onclick="showRankView('main')">← 뒤로</button>
         <h3 style="margin:0;font-size:16px;font-weight:600;">✏️ 내 포트 등록 / 업데이트</h3>
       </div>
       <div class="chart-card full">
@@ -919,6 +908,22 @@ const PORTFOLIO_DATA = {
           <input id="portComment" type="text" placeholder="예: 삼성전자 40%, TSMC 30%, 현금 30%" maxlength="80">
         </div>
         <button class="btn btn-primary" onclick="submitPortfolio()">등록 / 업데이트</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COMMUNITY (게시판) -->
+  <div class="section" id="community">
+
+    <!-- 기본 화면: 게시글 목록 -->
+    <div id="commMain">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <h3 style="font-size:16px;font-weight:600;">💬 자유게시판</h3>
+        <button class="btn btn-primary" style="font-size:12px;padding:6px 14px;" onclick="showCommView('postForm')">✍️ 글 올리기</button>
+      </div>
+      <div id="postsList">
+        <p style="text-align:center;color:var(--text3);padding:28px;">로딩 중...</p>
       </div>
     </div>
 
@@ -1084,7 +1089,8 @@ const PORTFOLIO_DATA = {
     <button class="bottom-tab" data-tab="trades"><span class="icon">📝</span>매매</button>
     <button class="bottom-tab" data-tab="journal"><span class="icon">🧠</span>일지</button>
     <button class="bottom-tab" data-tab="rules"><span class="icon">📋</span>규칙</button>
-    <button class="bottom-tab" data-tab="community"><span class="icon">🏘️</span>커뮤니티</button>
+    <button class="bottom-tab" data-tab="ranking"><span class="icon">🏆</span>랭킹</button>
+    <button class="bottom-tab" data-tab="community"><span class="icon">💬</span>게시판</button>
   </div>
 </div>
 
@@ -1814,9 +1820,14 @@ const FIREBASE_CONFIG = {
 let db = null;
 const FB_READY = FIREBASE_CONFIG.apiKey !== "REPLACE_API_KEY";
 
+function showRankView(view) {
+  document.getElementById('rankMain').style.display     = view === 'main'     ? 'block' : 'none';
+  document.getElementById('rankPortForm').style.display = view === 'portForm' ? 'block' : 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function showCommView(view) {
   document.getElementById('commMain').style.display     = view === 'main'     ? 'block' : 'none';
-  document.getElementById('commPortForm').style.display = view === 'portForm' ? 'block' : 'none';
   document.getElementById('commPostForm').style.display = view === 'postForm' ? 'block' : 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1912,7 +1923,7 @@ async function submitPortfolio() {
   }).catch(e => showToast('오류: ' + e.message));
   showToast(`✅ ${nick} 포트 등록 완료!`);
   ['portNick','portReturn','portComment'].forEach(id => document.getElementById(id).value = '');
-  showCommView('main');
+  showRankView('main');
 }
 
 function loadPosts() {
