@@ -770,7 +770,6 @@ const PORTFOLIO_DATA = {
   <!-- DASHBOARD -->
   <div class="section active" id="dashboard">
     <div class="summary-grid" id="summaryGrid"></div>
-    <div class="insight-box" id="insightBox"></div>
 
     <!-- 벤치마크 비교 섹션 -->
     <div style="margin-bottom:28px;">
@@ -852,7 +851,6 @@ const PORTFOLIO_DATA = {
         <div class="chart-wrapper" style="height:250px"><canvas id="investmentChart"></canvas></div>
       </div>
     </div>
-    <div class="insight-box" id="thoughtsBox"></div>
   </div>
 
   <!-- RANKING -->
@@ -1205,15 +1203,6 @@ function renderDashboard() {
     </div>
   `;
 
-  // Insight
-  const thought = D.thoughts && D.thoughts.length > 0 ? D.thoughts[0] : '';
-  // Clean up markdown formatting for display
-  const cleanThought = thought.replace(/^-\s*/gm, '').replace(/\n/g, '<br>').substring(0, 600);
-  document.getElementById('insightBox').innerHTML = `
-    <h3>🧠 블랙의 최신 판단</h3>
-    <p>${cleanThought || '아직 판단 기록이 없습니다.'}</p>
-  `;
-
   // 벤치마크 비교 카드
   renderDashBench();
 }
@@ -1389,14 +1378,6 @@ function renderAnalysis() {
   if (!html) html = '<p style="color:var(--text3);grid-column:1/-1">분석 데이터가 없습니다.</p>';
   grid.innerHTML = html;
 
-  // Thoughts
-  const box = document.getElementById('thoughtsBox');
-  if (D.thoughts && D.thoughts.length > 1) {
-    const review = D.thoughts[1] || '';
-    box.innerHTML = `<h3>📝 복기</h3><p>${review.replace(/\n/g,'<br>').substring(0,800)}</p>`;
-  } else {
-    box.style.display = 'none';
-  }
 }
 
 // ===== JOURNAL =====
@@ -1434,14 +1415,6 @@ function renderJournal() {
     html += `<div class="journal-block">
       <h3>📝 복기</h3>
       <div class="journal-text">${fmt(D.review)}</div>
-    </div>`;
-  }
-
-  // 판단 우선순위
-  if (D.priority) {
-    html += `<div class="journal-block">
-      <h3>📡 판단 우선순위</h3>
-      <div class="journal-text">${fmt(D.priority)}</div>
     </div>`;
   }
 
