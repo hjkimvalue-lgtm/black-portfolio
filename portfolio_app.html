@@ -1344,16 +1344,35 @@ function renderTrades() {
 // ===== ANALYSIS =====
 function renderAnalysis() {
   const grid = document.getElementById('analysisGrid');
-  grid.innerHTML = D.analysis.map(a => `
-    <div class="analysis-card">
-      <h4>${a.name}</h4>
-      <div class="signal-row"><span>펀더멘털</span><span class="signal-icon">${a.fundamental}</span></div>
-      <div class="signal-row"><span>차트</span><span class="signal-icon">${a.chart}</span></div>
-      <div class="signal-row"><span>마켓심리</span><span class="signal-icon">${a.sentiment}</span></div>
-      <div class="signal-row" style="font-weight:600"><span>종합</span><span class="signal-icon">${a.total}</span></div>
-      ${a.note ? `<div style="margin-top:8px;font-size:12px;color:var(--text3)">${a.note}</div>` : ''}
-    </div>
-  `).join('');
+  const krList = (D.analysis || []).filter(a => a.market === 'KR');
+  const usList = (D.analysis || []).filter(a => a.market === 'US');
+  // market 필드 없는 구버전 데이터도 표시
+  const etcList = (D.analysis || []).filter(a => !a.market);
+
+  function cardHtml(a) {
+    return `
+      <div class="analysis-card">
+        <h4>${a.name}</h4>
+        <div class="signal-row"><span>펀더멘털</span><span class="signal-icon">${a.fundamental}</span></div>
+        <div class="signal-row"><span>차트·수급</span><span class="signal-icon">${a.chart}</span></div>
+        <div class="signal-row"><span>심리·매크로</span><span class="signal-icon">${a.sentiment}</span></div>
+        <div class="signal-row" style="font-weight:600"><span>종합</span><span class="signal-icon">${a.total}</span></div>
+        ${a.note ? `<div style="margin-top:8px;font-size:12px;color:var(--text3)">${a.note}</div>` : ''}
+      </div>`;
+  }
+
+  let html = '';
+  if (krList.length > 0) {
+    html += `<div style="grid-column:1/-1;font-size:14px;font-weight:600;color:var(--text2);margin-bottom:4px;padding:8px 0 4px;border-bottom:1px solid var(--border);">🇰🇷 국내주식</div>`;
+    html += krList.map(cardHtml).join('');
+  }
+  if (usList.length > 0) {
+    html += `<div style="grid-column:1/-1;font-size:14px;font-weight:600;color:var(--text2);margin-top:20px;margin-bottom:4px;padding:8px 0 4px;border-bottom:1px solid var(--border);">🌐 미국주식</div>`;
+    html += usList.map(cardHtml).join('');
+  }
+  if (etcList.length > 0) html += etcList.map(cardHtml).join('');
+  if (!html) html = '<p style="color:var(--text3);grid-column:1/-1">분석 데이터가 없습니다.</p>';
+  grid.innerHTML = html;
 
   // Thoughts
   const box = document.getElementById('thoughtsBox');
