@@ -321,6 +321,62 @@ def extract_analysis(content):
     return analysis
 
 
+def extract_trade_log_table(all_files_content):
+    """모든 노트에서 '## 📝 매매기록' 테이블을 파싱하여 누적 반환"""
+    all_logs = []
+    seen = set()  # 중복 방지: (날짜, 종목) 키
+
+    for filename, content in all_files_content:
+        # 매매기록 섹션 찾기
+        m = re.search(r'##\s*📝\s*매매기록\s*\n(.*?)(?=\n##[^#]|\Z)', content, re.DOTALL)
+        if not m:
+            continue
+        section = m.group(1)
+
+        # 테이블 헤더 찾기
+        lines = section.split('\n')
+        header_idx = None
+        for i, line in enumerate(lines):
+            if '날짜' in line and '구분' in line and '종목' in line and '|' in line:
+                header_idx = i
+                break
+        if header_idx is None:
+            continue
+
+        for line in lines[header_idx + 2:]:
+            if not line.strip() or '|' not in line:
+                break
+            if set(line.replace('|', '').strip()) <= set('-: '):
+                continue
+            cells = [c.strip() for c in line.split('|')]
+            cells = [c for c in cells if c != '']
+            if len(cells) < 3:
+                continue
+
+            date_val    = cells[0] if len(cells) > 0 else ''
+            type_val    = cells[1] if len(cells) > 1 else ''
+            ticker_val  = cells[2] if len(cells) > 2 else ''
+            content_val = cells[3] if len(cells) > 3 else ''
+            pnl_val     = cells[4] if len(cells) > 4 else ''
+
+            key = (date_val, ticker_val)
+            if key in seen:
+                continue
+            seen.add(key)
+
+            all_logs.append({
+                'date': date_val,
+                'type': type_val,
+                'ticker': ticker_val,
+                'content': content_val,
+                'pnl': pnl_val,
+            })
+
+    # 날짜 역순 정렬 (최신순)
+    all_logs.sort(key=lambda x: x['date'], reverse=True)
+    return all_logs
+
+
 def extract_black_thoughts(content):
     """블랙의 생각 변화 추출"""
     m = re.search(r'###\s*블랙의 생각[^\n]*\n(.*?)(?=\n##[^#]|\Z)', content, re.DOTALL)
@@ -441,11 +497,8 @@ def main():
     holdings, sold = extract_holdings(latest_content)
     print(f"💼 보유 종목: {len(holdings)}개, 매도 종목: {len(sold)}개")
 
-    # 3. 거래 내역 수집 (전체 파일에서)
-    all_trades = []
-    for filename, content in all_content:
-        trades = extract_trades(content, filename)
-        all_trades.extend(trades)
+    # 3. 거래 내역 수집 (전체 파일 매매기록 테이블에서)
+    all_trades = extract_trade_log_table(all_content)
 
     # 4. 3대 축 분석 추출 (모든 파일에서 최신 것을 찾음)
     analysis = []
@@ -507,6 +560,7 @@ def main():
         'holdings': holdings,
         'sold': sold,
         'trades': all_trades,
+        'tradeLog': all_trades,
         'analysis': analysis,
         'thoughts': thoughts,
         'review': review,
