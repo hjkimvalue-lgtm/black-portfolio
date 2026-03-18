@@ -997,7 +997,7 @@ const PORTFOLIO_DATA = {
     <div class="rules-card">
       <h3>⚡ 매매 기준</h3>
       <div class="rule-item"><strong>매수가/매도가:</strong> 직전 거래일 종가 기준</div>
-      <div class="rule-item"><strong>판단 주기:</strong> 하루 단위 (매일 16:30 블랙DB 노트 + KIS API 종가 기반)</div>
+      <div class="rule-item"><strong>판단 주기:</strong> 하루단위 (블랙DB노트 + KIS API종가 기반)</div>
       <div class="rule-item"><strong>거래비용:</strong> 매도 시 1% 차감 (슬리피지 + 세금 + 수수료 통합)</div>
       <div class="rule-item"><strong>손절:</strong> 종가 기준 -8% 이상 + 차트 하락 신호 시</div>
     </div>
@@ -1021,8 +1021,8 @@ const PORTFOLIO_DATA = {
     </div>
     <div class="rules-card">
       <h3>🔄 크론잡 스케줄</h3>
-      <div class="rule-item"><strong>평일 16:30</strong> — 국내주식 종가 확인 + 내일 매매 결정 (월~금)</div>
-      <div class="rule-item"><strong>평일(화~토) 07:30</strong> — 미국주식 전일 종가 확인 + 당일 매매 결정</div>
+      <div class="rule-item"><strong>평일(월~금) 21:00</strong> — 국내 주식 종가 확인 + 내일 매매 결정</div>
+      <div class="rule-item"><strong>평일(월~토) 07:00</strong> — 미국 주식 종가 확인 + 당일 매매 결정</div>
       <div class="rule-item"><strong>토요일 09:00</strong> — 주간 운용 보고 + 다음 주 전략</div>
     </div>
   </div>
