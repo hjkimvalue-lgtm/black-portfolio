@@ -122,6 +122,7 @@ def extract_summary_from_latest(content):
         'totalPnl': 0,
         'unrealizedPnl': 0,
         'realizedPnl': 0,
+        'fxGain': 0,
     }
 
     # 총 수익률
@@ -138,6 +139,11 @@ def extract_summary_from_latest(content):
     m = re.search(r'미실현[^+\-\n]*([+\-][\d,.]+)만원', content)
     if m:
         summary['unrealizedPnl'] = float(m.group(1).replace(',', '')) * 10000
+
+    # 환차익 (형식: "환차익 +1,518만원")
+    m = re.search(r'환차익\s*([+\-]?[\d,.]+)만원', content)
+    if m:
+        summary['fxGain'] = float(m.group(1).replace(',', '')) * 10000
 
     # 실현 (형식: "/ 실현 -658만원" 또는 "| 실현: -658만원")
     m = re.search(r'[/·|]\s*실현[:\s]*([+\-]?[\d,.]+)만원', content)

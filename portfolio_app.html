@@ -16,22 +16,23 @@
 <script>
 // === DATA_START ===
 const PORTFOLIO_DATA = {
-  "lastUpdated": "2026-03-19 14:00",
+  "lastUpdated": "2026-03-19 14:29",
   "latestNote": "1주차_3일.md",
   "inceptionDate": "2026-03-13",
   "totalAsset": 1000000000,
   "summary": {
-    "totalReturn": 3.5,
-    "totalPnl": 34960000.0,
+    "totalReturn": 5.01,
+    "totalPnl": 50140000.0,
     "unrealizedPnl": 31320000.0,
-    "realizedPnl": -6580000.0
+    "realizedPnl": -6580000.0,
+    "fxGain": 15180000.0
   },
   "krWeight": 40.0,
   "usWeight": 62.0,
   "krCount": 4,
   "usCount": 5,
-  "krReturn": 7.96,
-  "usReturn": 1.65,
+  "krReturn": 6.19,
+  "usReturn": null,
   "holdings": [
     {
       "name": "오킨스전자",
@@ -285,9 +286,9 @@ const PORTFOLIO_DATA = {
     },
     {
       "date": "2026-03-18",
-      "total": 3.5,
-      "kr": 7.96,
-      "us": 1.65,
+      "total": 5.01,
+      "kr": 6.19,
+      "us": null,
       "kospi": 7.98,
       "sp500": -0.11
     }
@@ -1184,17 +1185,22 @@ function renderDashboard() {
     <div class="summary-card">
       <div class="label">실현 손익</div>
       <div class="value ${pnlClass(s.realizedPnl)}">${fmtPnl(s.realizedPnl)}</div>
-      <div class="sub">${D.sold.length > 0 ? D.sold.map(s=>s.name).join(', ') : '-'}</div>
+      <div class="sub">확정 손익</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">환차익</div>
+      <div class="value ${pnlClass(s.fxGain || 0)}">${s.fxGain ? fmtPnl(s.fxGain) : '-'}</div>
+      <div class="sub">미국 주식 환율 효과</div>
     </div>
     <div class="summary-card">
       <div class="label">국내 비중</div>
       <div class="value">${D.krWeight}<span style="font-size:16px">%</span></div>
-      <div class="sub">${D.krCount}종목 보유${D.krReturn !== null ? ' | ' + fmtPct(D.krReturn) : ''}</div>
+      <div class="sub">${D.krCount}종목${D.krReturn !== null ? ' | ' + fmtPct(D.krReturn) : ''}</div>
     </div>
     <div class="summary-card">
       <div class="label">해외 비중</div>
       <div class="value">${D.usWeight}<span style="font-size:16px">%</span></div>
-      <div class="sub">${D.usCount}종목 보유${D.usReturn !== null ? ' | ' + fmtPct(D.usReturn) : ''}</div>
+      <div class="sub">${D.usCount}종목${D.usReturn !== null ? ' | ' + fmtPct(D.usReturn) : ''}</div>
     </div>
   `;
 
