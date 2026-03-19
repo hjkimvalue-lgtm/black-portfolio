@@ -16,7 +16,7 @@
 <script>
 // === DATA_START ===
 const PORTFOLIO_DATA = {
-  "lastUpdated": "2026-03-19 14:29",
+  "lastUpdated": "2026-03-19 14:38",
   "latestNote": "1주차_3일.md",
   "inceptionDate": "2026-03-13",
   "totalAsset": 1000000000,
@@ -27,8 +27,8 @@ const PORTFOLIO_DATA = {
     "realizedPnl": -6580000.0,
     "fxGain": 15180000.0
   },
-  "krWeight": 40.0,
-  "usWeight": 62.0,
+  "krWeight": 40.1,
+  "usWeight": 59.9,
   "krCount": 4,
   "usCount": 5,
   "krReturn": 6.19,
@@ -38,108 +38,108 @@ const PORTFOLIO_DATA = {
       "name": "오킨스전자",
       "code": "080580",
       "market": "KR",
-      "weight": 10.0,
+      "weight": 9.7,
       "buyPrice": 18680.0,
       "currentPrice": 19520.0,
       "returnPct": 4.5,
-      "pnl": 4500000,
-      "investAmt": 100000000,
+      "pnl": 4365000,
+      "investAmt": 97000000,
       "status": "hold"
     },
     {
       "name": "저스템",
       "code": "417840",
       "market": "KR",
-      "weight": 10.0,
+      "weight": 9.3,
       "buyPrice": 7140.0,
       "currentPrice": 7160.0,
       "returnPct": 0.28,
-      "pnl": 280000,
-      "investAmt": 100000000,
+      "pnl": 260400,
+      "investAmt": 93000000,
       "status": "hold"
     },
     {
       "name": "대덕전자",
       "code": "008060",
       "market": "KR",
-      "weight": 15.0,
+      "weight": 16.0,
       "buyPrice": 64885.0,
       "currentPrice": 74800.0,
       "returnPct": 15.28,
-      "pnl": 22920000,
-      "investAmt": 150000000,
+      "pnl": 24448000,
+      "investAmt": 160000000,
       "status": "hold"
     },
     {
       "name": "케이엠더블유",
       "code": "032500",
       "market": "KR",
-      "weight": 5.0,
+      "weight": 5.1,
       "buyPrice": 26400.0,
       "currentPrice": 28850.0,
       "returnPct": 9.28,
-      "pnl": 4640000,
-      "investAmt": 50000000,
+      "pnl": 4732800,
+      "investAmt": 51000000,
       "status": "hold"
     },
     {
       "name": "NVDA",
       "code": "NVDA",
       "market": "US",
-      "weight": 20.0,
+      "weight": 19.0,
       "buyPrice": 180.25,
       "currentPrice": 180.4,
       "returnPct": 0.08,
-      "pnl": 160000,
-      "investAmt": 200000000,
+      "pnl": 152000,
+      "investAmt": 190000000,
       "status": "hold"
     },
     {
       "name": "MU",
       "code": "MU",
       "market": "US",
-      "weight": 15.0,
+      "weight": 15.5,
       "buyPrice": 426.13,
       "currentPrice": 461.73,
       "returnPct": 8.35,
-      "pnl": 12525000,
-      "investAmt": 150000000,
+      "pnl": 12942500,
+      "investAmt": 155000000,
       "status": "hold"
     },
     {
       "name": "AVGO",
       "code": "AVGO",
       "market": "US",
-      "weight": 10.0,
+      "weight": 9.3,
       "buyPrice": 322.16,
       "currentPrice": 315.1,
       "returnPct": -2.19,
-      "pnl": -2190000,
-      "investAmt": 100000000,
+      "pnl": -2036700,
+      "investAmt": 93000000,
       "status": "hold"
     },
     {
       "name": "MRVL",
       "code": "MRVL",
       "market": "US",
-      "weight": 10.0,
+      "weight": 9.4,
       "buyPrice": 88.3,
       "currentPrice": 87.62,
       "returnPct": -0.77,
-      "pnl": -770000,
-      "investAmt": 100000000,
+      "pnl": -723800,
+      "investAmt": 94000000,
       "status": "hold"
     },
     {
       "name": "META",
       "code": "META",
       "market": "US",
-      "weight": 7.0,
+      "weight": 6.7,
       "buyPrice": 613.71,
       "currentPrice": 615.68,
       "returnPct": 0.32,
-      "pnl": 224000,
-      "investAmt": 70000000,
+      "pnl": 214400,
+      "investAmt": 67000000,
       "status": "hold"
     }
   ],
@@ -296,12 +296,12 @@ const PORTFOLIO_DATA = {
   "best": {
     "name": "대덕전자",
     "returnPct": 15.28,
-    "pnl": 22920000
+    "pnl": 24448000
   },
   "worst": {
     "name": "AVGO",
     "returnPct": -2.19,
-    "pnl": -2190000
+    "pnl": -2036700
   }
 };
 // === DATA_END ===
@@ -800,7 +800,7 @@ const PORTFOLIO_DATA = {
         <div class="chart-wrapper"><canvas id="weightChart"></canvas></div>
       </div>
       <div class="chart-card full">
-        <h3>📊 국내 vs 해외 수익률</h3>
+        <h3>📊 국내 vs 미국 수익률</h3>
         <div class="chart-wrapper" style="height:200px"><canvas id="regionChart"></canvas></div>
       </div>
     </div>
@@ -1064,7 +1064,7 @@ const PORTFOLIO_DATA = {
         <label>시장</label>
         <select id="tradeMarket">
           <option value="KR">국내 (KR)</option>
-          <option value="US">해외 (US)</option>
+          <option value="US">미국 (US)</option>
         </select>
       </div>
     </div>
@@ -1198,7 +1198,7 @@ function renderDashboard() {
       <div class="sub">${D.krCount}종목${D.krReturn !== null ? ' | ' + fmtPct(D.krReturn) : ''}</div>
     </div>
     <div class="summary-card">
-      <div class="label">해외 비중</div>
+      <div class="label">미국 비중</div>
       <div class="value">${D.usWeight}<span style="font-size:16px">%</span></div>
       <div class="sub">${D.usCount}종목${D.usReturn !== null ? ' | ' + fmtPct(D.usReturn) : ''}</div>
     </div>
@@ -1217,7 +1217,7 @@ function renderHoldings() {
     <div class="summary-card">
       <div class="label">보유 종목수</div>
       <div class="value">${D.holdings.length}</div>
-      <div class="sub">국내 ${D.krCount} / 해외 ${D.usCount}</div>
+      <div class="sub">국내 ${D.krCount} / 미국 ${D.usCount}</div>
     </div>
     <div class="summary-card">
       <div class="label">최고 수익 종목</div>
@@ -1478,7 +1478,7 @@ function initCharts() {
   new Chart(document.getElementById('regionChart'), {
     type: 'bar',
     data: {
-      labels: [`국내 (${D.krWeight}%)`, `해외 (${D.usWeight}%)`],
+      labels: [`국내 (${D.krWeight}%)`, `미국 (${D.usWeight}%)`],
       datasets: [{
         label: '수익률',
         data: [D.krReturn || 0, D.usReturn || 0],
@@ -1598,7 +1598,7 @@ function initCharts() {
         datasets: [
           { label: '전체', data: D.dailyReturns.map(d => d.total), borderColor: '#7c5cfc', borderWidth: 2, tension: 0.3, fill: false },
           { label: '국내', data: D.dailyReturns.map(d => d.kr), borderColor: '#cd313a', borderWidth: 2, tension: 0.3, fill: false },
-          { label: '해외', data: D.dailyReturns.map(d => d.us), borderColor: '#3c3b6e', borderWidth: 2, tension: 0.3, fill: false },
+          { label: '미국', data: D.dailyReturns.map(d => d.us), borderColor: '#3c3b6e', borderWidth: 2, tension: 0.3, fill: false },
         ]
       },
       options: {
