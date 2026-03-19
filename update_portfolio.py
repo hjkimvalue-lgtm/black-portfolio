@@ -129,18 +129,18 @@ def extract_summary_from_latest(content):
     if m:
         summary['totalReturn'] = float(m.group(1))
 
-    # 총 손익
-    m = re.search(r'총 손익[:\s]*([+\-]?[\d,.]+)만원', content)
+    # 총 손익 (형식: "총 손익: +1,210만원" 또는 "총 수익금: +3,496만원")
+    m = re.search(r'(?:총 손익|총 수익금)[:\s]*([+\-]?[\d,.]+)만원', content)
     if m:
         summary['totalPnl'] = float(m.group(1).replace(',', '')) * 10000
 
-    # 미실현
-    m = re.search(r'미실현[:\s]*([+\-]?[\d,.]+)만원', content)
+    # 미실현 (형식: "미실현 +1,868만원" 또는 "미실현 국내: +3,132만원")
+    m = re.search(r'미실현[^+\-\n]*([+\-][\d,.]+)만원', content)
     if m:
         summary['unrealizedPnl'] = float(m.group(1).replace(',', '')) * 10000
 
-    # 실현 (미실현과 구분: "실현 -658만원" 또는 "/ 실현" 패턴)
-    m = re.search(r'[/·]\s*실현\s*([+\-]?[\d,.]+)만원', content)
+    # 실현 (형식: "/ 실현 -658만원" 또는 "| 실현: -658만원")
+    m = re.search(r'[/·|]\s*실현[:\s]*([+\-]?[\d,.]+)만원', content)
     if m:
         summary['realizedPnl'] = float(m.group(1).replace(',', '')) * 10000
     else:
@@ -448,8 +448,12 @@ def extract_daily_returns(all_files_content):
         date_match = re.search(r'(\d{4}-\d{2}-\d{2})', content[:200])
         date = date_match.group(1) if date_match else os.path.basename(filename)
 
-        kr_match    = re.search(r'(?:국내 포트|국내주식 수익률)[:\s]*([+\-]?[\d.]+)%', content)
-        us_match    = re.search(r'(?:미국 포트|미국주식 수익률)[:\s]*([+\-]?[\d.]+)%', content)
+        # 국내 수익률: "국내주식 수익률: +0.22%" 또는 "국내(투자금 대비): +7.96%"
+        kr_match = re.search(r'(?:국내 포트|국내주식 수익률|국내\([^)]*\))[:\s]*([+\-]?[\d.]+)%', content)
+        # 미국 수익률: "미국주식 수익률: +2.97%" 또는 "미국 부문 합계: 약 +1,022만원 (+1.65% / ...)"
+        us_match = re.search(r'(?:미국 포트|미국주식 수익률)[:\s]*([+\-]?[\d.]+)%', content)
+        if not us_match:
+            us_match = re.search(r'미국 부문 합계[^(]*\(([+\-]?[\d.]+)%', content)
         total_match = re.search(r'총 수익률[:\s]*([+\-]?[\d.]+)%', content)
 
         # 지수 누적 수익률 파싱
@@ -533,8 +537,10 @@ def main():
     # 국내/해외 수익률
     kr_return = None
     us_return = None
-    kr_match = re.search(r'(?:국내 포트|국내주식 수익률)[:\s]*([+\-]?[\d.]+)%', latest_content)
+    kr_match = re.search(r'(?:국내 포트|국내주식 수익률|국내\([^)]*\))[:\s]*([+\-]?[\d.]+)%', latest_content)
     us_match = re.search(r'(?:미국 포트|미국주식 수익률)[:\s]*([+\-]?[\d.]+)%', latest_content)
+    if not us_match:
+        us_match = re.search(r'미국 부문 합계[^(]*\(([+\-]?[\d.]+)%', latest_content)
     if kr_match:
         kr_return = float(kr_match.group(1))
     if us_match:
