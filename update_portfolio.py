@@ -135,10 +135,12 @@ def extract_summary_from_latest(content):
     if m:
         summary['totalPnl'] = float(m.group(1).replace(',', '')) * 10000
 
-    # 미실현 (형식: "미실현 +1,868만원" 또는 "미실현 국내: +3,132만원")
-    m = re.search(r'미실현[^+\-\n]*([+\-][\d,.]+)만원', content)
-    if m:
-        summary['unrealizedPnl'] = float(m.group(1).replace(',', '')) * 10000
+    # 미실현 - 국내+미국 모두 합산
+    # 형식1: "미실현 +1,868만원" (단일)
+    # 형식2: "미실현 국내: +3,132만원" + "미국: 미실현 +1,022만원" (분리)
+    all_unrealized = re.findall(r'미실현[^+\-\n]*([+\-][\d,.]+)만원', content)
+    if all_unrealized:
+        summary['unrealizedPnl'] = sum(float(v.replace(',', '')) for v in all_unrealized) * 10000
 
     # 환차익 (형식: "환차익 +1,518만원")
     m = re.search(r'환차익\s*([+\-]?[\d,.]+)만원', content)
