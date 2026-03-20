@@ -180,7 +180,13 @@ def extract_holdings(content):
         weight = parse_weight(weight_raw)
         buy_price = parse_price(row.get('매수단가', ''))
         current_price = parse_price(row.get('현재가', ''))
+        # 수익률 컬럼 유연하게 처리
+        # 구형: "수익률" / 신형: "원화수익률"(KRW기준) + "달러수익률"(USD기준)
         return_pct = parse_pct(row.get('수익률', ''))
+        if return_pct is None:
+            return_pct = parse_pct(row.get('원화수익률', ''))
+        if return_pct is None:
+            return_pct = parse_pct(row.get('달러수익률', ''))
         sell_price = parse_price(row.get('매도단가', ''))
 
         is_sold = (weight_raw in ['매도', '매도완료', 'sold']) or (sell_price and sell_price > 0)
@@ -458,8 +464,11 @@ def extract_daily_returns(all_files_content):
 
         # 국내 수익률: "국내주식 수익률: +0.22%" 또는 "국내(투자금 대비): +7.96%"
         kr_match = re.search(r'(?:국내 포트|국내주식 수익률|국내\([^)]*\))[:\s]*([+\-]?[\d.]+)%', content)
-        # 미국 수익률: "미국주식 수익률: +2.97%" 또는 "원화합산 +4.23%" (미국 부문 합계 라인)
+        # 미국 수익률: 여러 형식 순서대로 시도
         us_match = re.search(r'(?:미국 포트|미국주식 수익률)[:\s]*([+\-]?[\d.]+)%', content)
+        if not us_match:
+            # "원화 합산: +3.50%" 또는 "원화합산 +4.23%"
+            us_match = re.search(r'원화\s*합산[:\s]+([+\-]?[\d.]+)%', content)
         if not us_match:
             us_match = re.search(r'미국 부문 합계[^\n]*원화합산\s+([+\-]?[\d.]+)%', content)
         if not us_match:
@@ -549,6 +558,8 @@ def main():
     us_return = None
     kr_match = re.search(r'(?:국내 포트|국내주식 수익률|국내\([^)]*\))[:\s]*([+\-]?[\d.]+)%', latest_content)
     us_match = re.search(r'(?:미국 포트|미국주식 수익률)[:\s]*([+\-]?[\d.]+)%', latest_content)
+    if not us_match:
+        us_match = re.search(r'원화\s*합산[:\s]+([+\-]?[\d.]+)%', latest_content)
     if not us_match:
         us_match = re.search(r'미국 부문 합계[^\n]*원화합산\s+([+\-]?[\d.]+)%', latest_content)
     if not us_match:
